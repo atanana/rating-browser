@@ -8,5 +8,6 @@ import org.kodein.di.android.x.androidXModule
 class App : Application(), KodeinAware {
     override val kodein by Kodein.lazy {
         import(androidXModule(this@App))
+        import(mainModule)
     }
 }

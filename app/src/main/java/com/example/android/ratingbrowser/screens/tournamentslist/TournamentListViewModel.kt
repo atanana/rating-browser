@@ -7,4 +7,8 @@ import org.kodein.di.android.x.kodein
 
 class TournamentListViewModel(app: Application) : AndroidViewModel(app), KodeinAware {
     override val kodein by kodein()
+
+    fun test(): Unit {
+
+    }
 }
