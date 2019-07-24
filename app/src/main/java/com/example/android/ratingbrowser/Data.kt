@@ -1,6 +1,6 @@
 package com.example.android.ratingbrowser
 
-import java.time.LocalDate
+import org.threeten.bp.LocalDate
 
 data class TournamentShort(
     val id: Int,
