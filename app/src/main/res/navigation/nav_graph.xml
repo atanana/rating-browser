@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/tournamentList">
+
+    <fragment
+        android:id="@+id/tournamentList"
+        android:name="com.example.android.ratingbrowser.screens.tournamentslist.TournamentList"
+        android:label="fragment_tournament_list"
+        tools:layout="@layout/fragment_tournament_list" />
+</navigation>
