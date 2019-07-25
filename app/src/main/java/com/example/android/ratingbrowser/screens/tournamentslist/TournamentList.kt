@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.ratingbrowser.R
-import com.example.android.ratingbrowser.TournamentShort
+import com.example.android.ratingbrowser.data.TournamentShort
 import com.example.android.ratingbrowser.screens.BaseFragment
 import kotlinx.android.synthetic.main.fragment_tournament_list.*
 import org.kodein.di.generic.instance

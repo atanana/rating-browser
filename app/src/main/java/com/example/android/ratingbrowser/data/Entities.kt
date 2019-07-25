@@ -1,4 +1,4 @@
-package com.example.android.ratingbrowser
+package com.example.android.ratingbrowser.data
 
 import org.threeten.bp.LocalDate
 

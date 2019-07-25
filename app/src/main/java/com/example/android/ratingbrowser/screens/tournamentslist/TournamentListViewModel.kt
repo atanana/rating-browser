@@ -3,18 +3,22 @@ package com.example.android.ratingbrowser.screens.tournamentslist
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.android.ratingbrowser.TournamentShort
-import com.example.android.ratingbrowser.TournamentType
+import androidx.lifecycle.viewModelScope
+import com.example.android.ratingbrowser.data.Repository
+import com.example.android.ratingbrowser.data.TournamentShort
 import com.example.android.ratingbrowser.screens.BaseViewModel
-import org.threeten.bp.LocalDate
+import kotlinx.coroutines.launch
+import org.kodein.di.generic.instance
 
 class TournamentListViewModel(app: Application) : BaseViewModel(app) {
+    private val repository: Repository by instance()
+
     private val tournamentsData = MutableLiveData<List<TournamentShort>>()
     val tournaments: LiveData<List<TournamentShort>> = tournamentsData
 
     init {
-        tournamentsData.value = listOf(
-            TournamentShort(123, "test name", LocalDate.now(), TournamentType.SYNCH, 5.0f)
-        )
+        viewModelScope.launch {
+            tournamentsData.value = repository.getTournaments().await()
+        }
     }
 }

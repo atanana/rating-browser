@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.ratingbrowser.R
-import com.example.android.ratingbrowser.TournamentShort
+import com.example.android.ratingbrowser.data.TournamentShort
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_tournament.*
 
