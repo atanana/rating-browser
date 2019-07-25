@@ -9,8 +9,11 @@ import android.view.ViewGroup
 
 import com.example.android.ratingbrowser.R
 import com.example.android.ratingbrowser.screens.BaseFragment
+import org.kodein.di.generic.instance
 
-class TournamentPage : BaseFragment() {
+class TournamentPage : BaseFragment<TournamentPageViewModel>() {
+    override val viewModel: TournamentPageViewModel by instance()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

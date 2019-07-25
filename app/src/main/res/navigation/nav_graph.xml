@@ -9,5 +9,19 @@
         android:id="@+id/tournamentList"
         android:name="com.example.android.ratingbrowser.screens.tournamentslist.TournamentList"
         android:label="fragment_tournament_list"
-        tools:layout="@layout/fragment_tournament_list" />
+        tools:layout="@layout/fragment_tournament_list">
+        <action
+            android:id="@+id/action_tournamentList_to_tournamentPage"
+            app:destination="@id/tournamentPage" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tournamentPage"
+        android:name="com.example.android.ratingbrowser.screens.tournamentpage.TournamentPage"
+        android:label="fragment_tournament_page"
+        tools:layout="@layout/fragment_tournament_page" >
+        <argument
+            android:name="tournamentId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -9,7 +9,8 @@ import com.example.android.ratingbrowser.TournamentShort
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_tournament.*
 
-class TournamentsAdapter : RecyclerView.Adapter<TournamentViewHolder>() {
+class TournamentsAdapter(private val clickListener: (TournamentShort) -> Unit) :
+    RecyclerView.Adapter<TournamentsAdapter.TournamentViewHolder>() {
     var items: List<TournamentShort> = emptyList()
         set(value) {
             field = value
@@ -26,10 +27,12 @@ class TournamentsAdapter : RecyclerView.Adapter<TournamentViewHolder>() {
     override fun onBindViewHolder(holder: TournamentViewHolder, position: Int) {
         holder.bind(items[position])
     }
-}
 
-class TournamentViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-    fun bind(data: TournamentShort) {
-        title.text = data.name
+    inner class TournamentViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+        LayoutContainer {
+        fun bind(data: TournamentShort) {
+            title.text = data.name
+            containerView.setOnClickListener { clickListener(data) }
+        }
     }
 }
