@@ -7,7 +7,7 @@ data class TournamentShort(
     val name: String,
     val endDate: LocalDate,
     val type: TournamentType,
-    val difficulty: Float
+    val difficulty: Float?
 )
 
 enum class TournamentType {

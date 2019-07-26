@@ -18,7 +18,7 @@ class TournamentListViewModel(app: Application) : BaseViewModel(app) {
 
     init {
         viewModelScope.launch {
-            tournamentsData.value = repository.getTournaments().await()
+            tournamentsData.value = repository.getTournaments()
         }
     }
 }

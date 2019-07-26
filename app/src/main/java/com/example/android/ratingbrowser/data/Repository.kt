@@ -1,19 +1,19 @@
 package com.example.android.ratingbrowser.data
 
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
+import kotlinx.coroutines.*
 import org.threeten.bp.LocalDate
 
-class Repository {
+class Repository(private val queries: Queries, private val tournamentsPageParser: TournamentsPageParser) {
     private val tournaments = listOf(
         TournamentShort(1, "first", LocalDate.now(), TournamentType.SYNCH, 5.0f),
         TournamentShort(2, "second", LocalDate.now(), TournamentType.REAL, 3.0f),
         TournamentShort(3, "third", LocalDate.now(), TournamentType.ASYNCH, 4.0f)
     )
 
-    suspend fun getTournaments(): Deferred<List<TournamentShort>> = coroutineScope {
-        async { tournaments }
+    suspend fun getTournaments(): List<TournamentShort> {
+        val response = queries.getTournaments().await()
+        return tournamentsPageParser.parse(response)
     }
 
     suspend fun getTournament(tournamentId: Int): Deferred<TournamentShort> = coroutineScope {
