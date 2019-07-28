@@ -1,11 +1,11 @@
 package com.example.android.ratingbrowser.screens.tournamentslist
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.ratingbrowser.R
 import com.example.android.ratingbrowser.data.TournamentShort
+import com.example.android.ratingbrowser.utils.inflate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_tournament.*
 import org.threeten.bp.format.DateTimeFormatter
@@ -19,7 +19,7 @@ class TournamentsAdapter(private val clickListener: (TournamentShort) -> Unit) :
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TournamentViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_tournament, parent, false)
+        val view = parent.inflate(R.layout.item_tournament, false)
         return TournamentViewHolder(view)
     }
 
