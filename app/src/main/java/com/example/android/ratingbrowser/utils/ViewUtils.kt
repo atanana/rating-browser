@@ -17,3 +17,7 @@ fun Context.inflate(
 
 fun ViewGroup.inflate(@LayoutRes layout: Int, attachToRoot: Boolean = false): View =
     context.inflate(layout, this, attachToRoot)
+
+fun View.setVisibility(isVisible: Boolean) {
+    visibility = if (isVisible) View.VISIBLE else View.GONE
+}
