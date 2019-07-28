@@ -8,6 +8,7 @@ import com.example.android.ratingbrowser.R
 import com.example.android.ratingbrowser.data.TournamentShort
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_tournament.*
+import org.threeten.bp.format.DateTimeFormatter
 
 class TournamentsAdapter(private val clickListener: (TournamentShort) -> Unit) :
     RecyclerView.Adapter<TournamentsAdapter.TournamentViewHolder>() {
@@ -28,10 +29,13 @@ class TournamentsAdapter(private val clickListener: (TournamentShort) -> Unit) :
         holder.bind(items[position])
     }
 
-    inner class TournamentViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+    inner class TournamentViewHolder(override val containerView: View) :
+        RecyclerView.ViewHolder(containerView),
         LayoutContainer {
         fun bind(data: TournamentShort) {
             title.text = data.name
+            difficulty.text = data.difficulty?.toString() ?: "-"
+            date.text = data.endDate.format(DateTimeFormatter.ISO_DATE)
             containerView.setOnClickListener { clickListener(data) }
         }
     }
