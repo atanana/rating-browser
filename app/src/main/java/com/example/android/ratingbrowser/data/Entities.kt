@@ -12,6 +12,10 @@ data class TournamentShort(
 
 enum class TournamentType {
     SYNCH,
+    REAL_SYNCH,
     ASYNCH,
-    REAL
+    REAL,
+    MARATHON,
+    COMMON,
+    UNKNOWN
 }
