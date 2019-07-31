@@ -11,7 +11,7 @@ import com.example.android.ratingbrowser.R
 import com.example.android.ratingbrowser.data.TournamentShort
 import com.example.android.ratingbrowser.screens.BaseFragment
 import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListState.*
-import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListState.TournamentList
+import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListState.OK
 import com.example.android.ratingbrowser.utils.setVisibility
 import kotlinx.android.synthetic.main.fragment_tournament_list.*
 import org.kodein.di.generic.instance
@@ -48,11 +48,11 @@ class TournamentList : BaseFragment<TournamentListViewModel>() {
                 errorMessage.setVisibility(true)
                 errorMessage.text = state.message
             }
-            is TournamentList -> {
+            is OK -> {
                 tournaments.setVisibility(true)
                 loading.setVisibility(false)
                 errorMessage.setVisibility(false)
-                tournamentsAdapter.items = state.tournaments
+                tournamentsAdapter.items = state.tournamentsList.tournaments
             }
         }
     }
