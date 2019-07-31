@@ -24,10 +24,9 @@ class TournamentsPageParser {
                 name = children[1].select("a")[0].text(),
                 endDate = LocalDate.parse(children[2].text(), formatter),
                 type = children[3].text().parseTournamentType(),
-                difficulty = children[5].text().parseDifficulty()
+                difficulty = children[5].select(".var-dl").text().parseDifficulty()
             )
         } catch (error: Exception) {
-            Timber.e(error)
             null
         }
 
