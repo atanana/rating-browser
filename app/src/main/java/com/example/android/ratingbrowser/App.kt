@@ -1,10 +1,12 @@
 package com.example.android.ratingbrowser
 
 import android.app.Application
+import android.os.Build
 import com.jakewharton.threetenabp.AndroidThreeTen
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
+import timber.log.Timber
 
 class App : Application(), KodeinAware {
     override val kodein by Kodein.lazy {
@@ -14,6 +16,11 @@ class App : Application(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
+
         AndroidThreeTen.init(this)
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 }
