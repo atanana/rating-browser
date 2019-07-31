@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="tournament_synch">#E0F7FA</color>
+    <color name="tournament_real">#FCE4EC</color>
+    <color name="tournament_common">#EDE7F6</color>
+    <color name="tournament_default">#FFFFFF</color>
 </resources>
