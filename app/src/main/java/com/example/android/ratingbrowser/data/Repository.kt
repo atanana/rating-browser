@@ -13,7 +13,9 @@ class Repository(private val queries: Queries, private val tournamentsPageParser
 
     suspend fun getTournaments(): List<TournamentShort> {
         val response = queries.getTournaments().await()
-        return tournamentsPageParser.parse(response)
+        return withContext(Dispatchers.Default) {
+            tournamentsPageParser.parse(response)
+        }
     }
 
     suspend fun getTournament(tournamentId: Int): Deferred<TournamentShort> = coroutineScope {
