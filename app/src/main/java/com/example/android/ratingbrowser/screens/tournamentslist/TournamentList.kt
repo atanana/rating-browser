@@ -53,6 +53,7 @@ class TournamentList : BaseFragment<TournamentListViewModel>() {
                 loading.setVisibility(false)
                 errorMessage.setVisibility(false)
                 tournamentsAdapter.items = state.tournamentsList.tournaments
+                tournaments.scrollToPosition(state.tournamentsList.scrollPosition)
             }
         }
     }
