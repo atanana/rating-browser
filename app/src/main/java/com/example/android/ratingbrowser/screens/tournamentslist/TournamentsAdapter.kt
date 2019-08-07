@@ -1,62 +1,76 @@
 package com.example.android.ratingbrowser.screens.tournamentslist
 
-import android.content.Context
-import android.content.res.Resources
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.ColorInt
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.ratingbrowser.R
-import com.example.android.ratingbrowser.data.TournamentShort
-import com.example.android.ratingbrowser.data.TournamentType
-import com.example.android.ratingbrowser.data.TournamentType.*
 import com.example.android.ratingbrowser.utils.inflate
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_month.*
 import kotlinx.android.synthetic.main.item_tournament.*
-import org.threeten.bp.format.DateTimeFormatter
 
-class TournamentsAdapter(private val clickListener: (TournamentShort) -> Unit) :
-    RecyclerView.Adapter<TournamentsAdapter.TournamentViewHolder>() {
-    var items: List<TournamentShort> = emptyList()
+class TournamentsAdapter(private val clickListener: (Int) -> Unit) :
+    RecyclerView.Adapter<TournamentsAdapter.TournamentItemViewHolder>() {
+    var items: List<TournamentListItem> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TournamentViewHolder {
-        val view = parent.inflate(R.layout.item_tournament, false)
-        return TournamentViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TournamentItemViewHolder =
+        when (viewType) {
+            ITEM_TYPE_TOURNAMENT -> {
+                val view = parent.inflate(R.layout.item_tournament, false)
+                TournamentViewHolder(view)
+            }
+            ITEM_TYPE_MONTH -> {
+                val view = parent.inflate(R.layout.item_month, false)
+                MonthSeparatorViewHolder(view)
+            }
+            else -> throw IllegalStateException("Unknown type $viewType")
+        }
 
     override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(holder: TournamentViewHolder, position: Int) {
-        holder.bind(items[position])
+    override fun onBindViewHolder(holder: TournamentItemViewHolder, position: Int) {
+        when (val item = items[position]) {
+            is TournamentItem -> (holder as TournamentViewHolder).bind(item)
+            is MonthSeparator -> (holder as MonthSeparatorViewHolder).bind(item)
+        }
     }
 
-    inner class TournamentViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView),
-        LayoutContainer {
-
-        fun bind(data: TournamentShort) {
-            title.text = data.name
-            difficulty.text = data.difficulty?.toString() ?: "-"
-            date.text = data.endDate.format(DateTimeFormatter.ISO_DATE)
-            card.setCardBackgroundColor(getTournamentColor(data.type, containerView.context))
-            containerView.setOnClickListener { clickListener(data) }
+    override fun getItemViewType(position: Int): Int =
+        when (items[position]) {
+            is TournamentItem -> ITEM_TYPE_TOURNAMENT
+            is MonthSeparator -> ITEM_TYPE_MONTH
         }
 
-        @ColorInt
-        private fun getTournamentColor(type: TournamentType, context: Context): Int {
-            val colorRes = when (type) {
-                REAL_SYNCH,
-                SYNCH -> R.color.tournament_synch
-                REAL -> R.color.tournament_real
-                COMMON -> R.color.tournament_common
-                else -> R.color.tournament_default
-            }
-            return ResourcesCompat.getColor(context.resources, colorRes, context.theme)
+    abstract class TournamentItemViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+        LayoutContainer
+
+    inner class MonthSeparatorViewHolder(view: View) : TournamentItemViewHolder(view) {
+        fun bind(data: MonthSeparator) {
+            month_title.text = data.title
         }
+    }
+
+    inner class TournamentViewHolder(view: View) : TournamentItemViewHolder(view) {
+        fun bind(data: TournamentItem) {
+            title.text = data.title
+            difficulty.text = data.difficulty
+            date.text = data.date
+
+            val context = containerView.context
+            val color = ResourcesCompat.getColor(context.resources, data.color, context.theme)
+            card.setCardBackgroundColor(color)
+
+            containerView.setOnClickListener { clickListener(data.id) }
+        }
+    }
+
+    companion object {
+        private const val ITEM_TYPE_TOURNAMENT = 0
+        private const val ITEM_TYPE_MONTH = 1
     }
 }

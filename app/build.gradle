@@ -59,6 +59,7 @@ dependencies {
 
     implementation 'org.jsoup:jsoup:1.12.1'
     implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'com.brandongogetap:stickyheaders:0.6.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
