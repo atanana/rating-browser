@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:background="@color/default_background"
+    android:orientation="vertical"
+    android:padding="@dimen/default_padding">
 
     <TextView
         android:id="@+id/month_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/HeaderText"
         tools:text="Month 2019" />
 
 </FrameLayout>

@@ -8,4 +8,6 @@
     <color name="tournament_real">#FCE4EC</color>
     <color name="tournament_common">#EDE7F6</color>
     <color name="tournament_default">#FFFFFF</color>
+
+    <color name="default_background">#FFFFFF</color>
 </resources>

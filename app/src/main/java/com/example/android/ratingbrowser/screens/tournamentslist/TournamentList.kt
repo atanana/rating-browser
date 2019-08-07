@@ -29,8 +29,10 @@ class TournamentList : BaseFragment<TournamentListViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         tournaments.adapter = tournamentsAdapter
-        tournaments.layoutManager =
-            StickyLayoutManager(requireContext(), StickyHeaderHandler { tournamentsAdapter.items })
+        val stickyHeaderHandler = StickyHeaderHandler { tournamentsAdapter.items }
+        val stickyLayoutManager = StickyLayoutManager(requireContext(), stickyHeaderHandler)
+        stickyLayoutManager.elevateHeaders(true)
+        tournaments.layoutManager = stickyLayoutManager
 
         viewModel.tournaments.observe(viewLifecycleOwner, Observer(this::processState))
     }
