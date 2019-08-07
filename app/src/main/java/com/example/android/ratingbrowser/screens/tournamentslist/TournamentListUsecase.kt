@@ -36,7 +36,7 @@ class TournamentListUsecase(private val repository: Repository) {
     }
 
     private fun createMonthSeparator(month: LocalDate): MonthSeparator =
-        MonthSeparator(month.format(DateTimeFormatter.BASIC_ISO_DATE))
+        MonthSeparator(month.format(DATE_FORMAT))
 
     private fun TournamentShort.toItem(): TournamentItem {
         val date = endDate.format(DateTimeFormatter.ISO_DATE)
@@ -49,6 +49,10 @@ class TournamentListUsecase(private val repository: Repository) {
             else -> R.color.tournament_default
         }
         return TournamentItem(id, name, date, difficulty, color)
+    }
+
+    companion object {
+        private val DATE_FORMAT = DateTimeFormatter.ofPattern("MMMM YYYY")
     }
 }
 
