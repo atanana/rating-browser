@@ -24,6 +24,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }
 
 androidExtensions {
@@ -62,6 +67,7 @@ dependencies {
     implementation 'com.brandongogetap:stickyheaders:0.6.0'
 
     testImplementation 'junit:junit:4.12'
+    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.3.2'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
