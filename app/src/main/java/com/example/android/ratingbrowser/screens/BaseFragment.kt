@@ -9,6 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.android.ratingbrowser.R
+import com.example.android.ratingbrowser.data.StateWrapper
+import com.example.android.ratingbrowser.data.StateWrapper.*
+import com.example.android.ratingbrowser.utils.setVisibility
+import kotlinx.android.synthetic.main.fragment_base.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 
@@ -35,5 +39,27 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(R.layout.fragment_base
         val view = super.onCreateView(inflater, container, savedInstanceState)
         inflater.inflate(customLayout, view?.findViewById(R.id.customRoot))
         return view
+    }
+
+    protected fun <T> processState(state: StateWrapper<T>, block: (T) -> Unit) {
+        when (state) {
+            is Loading -> {
+                customRoot.setVisibility(false)
+                loading.setVisibility(true)
+                errorMessage.setVisibility(false)
+            }
+            is Error -> {
+                customRoot.setVisibility(false)
+                loading.setVisibility(false)
+                errorMessage.setVisibility(true)
+                errorMessage.text = state.message
+            }
+            is Ok -> {
+                customRoot.setVisibility(true)
+                loading.setVisibility(false)
+                errorMessage.setVisibility(false)
+                block(state.data)
+            }
+        }
     }
 }

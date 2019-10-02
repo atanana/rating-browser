@@ -5,12 +5,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import com.example.android.ratingbrowser.R
-import com.example.android.ratingbrowser.data.StateWrapper
-import com.example.android.ratingbrowser.data.StateWrapper.*
 import com.example.android.ratingbrowser.data.Tournament
 import com.example.android.ratingbrowser.screens.BaseFragment
-import com.example.android.ratingbrowser.utils.setVisibility
-import kotlinx.android.synthetic.main.fragment_base.*
 import kotlinx.android.synthetic.main.fragment_tournament_page.*
 import org.kodein.di.generic.instance
 
@@ -28,28 +24,12 @@ class TournamentPage : BaseFragment<TournamentPageViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.tournament.observe(viewLifecycleOwner, Observer(this::processState))
+        viewModel.tournament.observe(viewLifecycleOwner, Observer {
+            processState(it, this::processData)
+        })
     }
 
-    private fun processState(state: StateWrapper<Tournament>) {
-        when (state) {
-            is Loading -> {
-                title.setVisibility(false)
-                loading.setVisibility(true)
-                errorMessage.setVisibility(false)
-            }
-            is Error -> {
-                title.setVisibility(false)
-                loading.setVisibility(false)
-                errorMessage.setVisibility(true)
-                errorMessage.text = state.message
-            }
-            is Ok -> {
-                title.setVisibility(true)
-                loading.setVisibility(false)
-                errorMessage.setVisibility(false)
-                title.text = state.data.name
-            }
-        }
+    private fun processData(tournament: Tournament) {
+        title.text = tournament.name
     }
 }

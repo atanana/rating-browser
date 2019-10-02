@@ -7,11 +7,7 @@ import androidx.lifecycle.Observer
 import com.brandongogetap.stickyheaders.StickyLayoutManager
 import com.brandongogetap.stickyheaders.exposed.StickyHeaderHandler
 import com.example.android.ratingbrowser.R
-import com.example.android.ratingbrowser.data.StateWrapper
-import com.example.android.ratingbrowser.data.StateWrapper.*
 import com.example.android.ratingbrowser.screens.BaseFragment
-import com.example.android.ratingbrowser.utils.setVisibility
-import kotlinx.android.synthetic.main.fragment_base.*
 import kotlinx.android.synthetic.main.fragment_tournament_list.*
 import org.kodein.di.generic.instance
 
@@ -31,30 +27,14 @@ class TournamentList : BaseFragment<TournamentListViewModel>() {
         stickyLayoutManager.elevateHeaders(true)
         tournaments.layoutManager = stickyLayoutManager
 
-        viewModel.tournaments.observe(viewLifecycleOwner, Observer(this::processState))
+        viewModel.tournaments.observe(viewLifecycleOwner, Observer {
+            processState(it, this::processData)
+        })
     }
 
-    private fun processState(state: StateWrapper<TournamentsList>) {
-        when (state) {
-            is Loading -> {
-                tournaments.setVisibility(false)
-                loading.setVisibility(true)
-                errorMessage.setVisibility(false)
-            }
-            is Error -> {
-                tournaments.setVisibility(false)
-                loading.setVisibility(false)
-                errorMessage.setVisibility(true)
-                errorMessage.text = state.message
-            }
-            is Ok -> {
-                tournaments.setVisibility(true)
-                loading.setVisibility(false)
-                errorMessage.setVisibility(false)
-                tournamentsAdapter.items = state.data.tournaments
-                tournaments.scrollToPosition(state.data.scrollPosition)
-            }
-        }
+    private fun processData(tournamentList: TournamentsList) {
+        tournamentsAdapter.items = tournamentList.tournaments
+        tournaments.scrollToPosition(tournamentList.scrollPosition)
     }
 
     private fun onTournamentClicked(tournamentId: Int) {
