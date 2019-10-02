@@ -1,18 +1,15 @@
 package com.example.android.ratingbrowser.data
 
+import com.example.android.ratingbrowser.data.parsers.TournamentPageParser
 import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
 import kotlinx.coroutines.*
-import org.threeten.bp.LocalDate
 
 class Repository(
     private val queries: Queries,
-    private val tournamentsPageParser: TournamentsPageParser
+    private val tournamentsPageParser: TournamentsPageParser,
+    private val tournamentPageParser: TournamentPageParser
 ) {
-    private val tournaments = listOf(
-        TournamentShort(1, "first", LocalDate.now(), TournamentType.SYNCH, 5.0f),
-        TournamentShort(2, "second", LocalDate.now(), TournamentType.REAL, 3.0f),
-        TournamentShort(3, "third", LocalDate.now(), TournamentType.ASYNCH, 4.0f)
-    )
+
 
     suspend fun getTournaments(): List<TournamentShort> {
         val response = queries.getTournaments()
@@ -21,7 +18,10 @@ class Repository(
         }
     }
 
-    suspend fun getTournament(tournamentId: Int): Deferred<TournamentShort> = coroutineScope {
-        async { tournaments.first { it.id == tournamentId } }
+    suspend fun getTournament(tournamentId: Int): Tournament? {
+        val response = queries.getTournamentInfo(tournamentId)
+        return withContext(Dispatchers.Default) {
+            tournamentPageParser.parse(response)
+        }
     }
 }

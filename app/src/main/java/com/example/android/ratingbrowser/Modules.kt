@@ -21,7 +21,7 @@ val mainModule = Kodein.Module("Main") {
     bind() from provider { TournamentListViewModel(instance()) }
     bind() from provider { TournamentPageViewModel(instance()) }
 
-    bind() from singleton { Repository(instance(), instance()) }
+    bind() from singleton { Repository(instance(), instance(), instance()) }
     bind() from singleton { createQueries() }
     bind() from singleton { TournamentListUsecase(instance()) }
 
