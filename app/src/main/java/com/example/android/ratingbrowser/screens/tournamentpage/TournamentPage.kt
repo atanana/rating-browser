@@ -2,9 +2,7 @@ package com.example.android.ratingbrowser.screens.tournamentpage
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.example.android.ratingbrowser.R
 import com.example.android.ratingbrowser.data.StateWrapper
@@ -12,11 +10,14 @@ import com.example.android.ratingbrowser.data.StateWrapper.*
 import com.example.android.ratingbrowser.data.Tournament
 import com.example.android.ratingbrowser.screens.BaseFragment
 import com.example.android.ratingbrowser.utils.setVisibility
+import kotlinx.android.synthetic.main.fragment_base.*
 import kotlinx.android.synthetic.main.fragment_tournament_page.*
 import org.kodein.di.generic.instance
 
 class TournamentPage : BaseFragment<TournamentPageViewModel>() {
     override val viewModel: TournamentPageViewModel by instance()
+
+    override val customLayout = R.layout.fragment_tournament_page
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,11 +25,6 @@ class TournamentPage : BaseFragment<TournamentPageViewModel>() {
             viewModel.init(arguments!!)
         }
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_tournament_page, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -2,29 +2,25 @@ package com.example.android.ratingbrowser.screens.tournamentslist
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.brandongogetap.stickyheaders.StickyLayoutManager
 import com.brandongogetap.stickyheaders.exposed.StickyHeaderHandler
 import com.example.android.ratingbrowser.R
 import com.example.android.ratingbrowser.data.StateWrapper
-import com.example.android.ratingbrowser.screens.BaseFragment
 import com.example.android.ratingbrowser.data.StateWrapper.*
+import com.example.android.ratingbrowser.screens.BaseFragment
 import com.example.android.ratingbrowser.utils.setVisibility
+import kotlinx.android.synthetic.main.fragment_base.*
 import kotlinx.android.synthetic.main.fragment_tournament_list.*
 import org.kodein.di.generic.instance
 
 class TournamentList : BaseFragment<TournamentListViewModel>() {
     override val viewModel: TournamentListViewModel by instance()
 
-    private val tournamentsAdapter = TournamentsAdapter(this::onTournamentClicked)
+    override val customLayout = R.layout.fragment_tournament_list
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_tournament_list, container, false)
+    private val tournamentsAdapter = TournamentsAdapter(this::onTournamentClicked)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
