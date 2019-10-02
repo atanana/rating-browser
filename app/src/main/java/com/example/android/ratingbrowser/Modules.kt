@@ -2,6 +2,7 @@ package com.example.android.ratingbrowser
 
 import com.example.android.ratingbrowser.data.Queries
 import com.example.android.ratingbrowser.data.Repository
+import com.example.android.ratingbrowser.data.parsers.TournamentPageParser
 import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
 import com.example.android.ratingbrowser.screens.tournamentpage.TournamentPageViewModel
 import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListUsecase
@@ -22,8 +23,10 @@ val mainModule = Kodein.Module("Main") {
 
     bind() from singleton { Repository(instance(), instance()) }
     bind() from singleton { createQueries() }
-    bind() from singleton { TournamentsPageParser() }
     bind() from singleton { TournamentListUsecase(instance()) }
+
+    bind() from singleton { TournamentsPageParser() }
+    bind() from singleton { TournamentPageParser() }
 }
 
 private fun createQueries(): Queries {

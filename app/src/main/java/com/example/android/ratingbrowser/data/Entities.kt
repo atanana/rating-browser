@@ -10,6 +10,19 @@ data class TournamentShort(
     val difficulty: Float?
 )
 
+data class Tournament(
+    val name: String,
+    val startDate: String,
+    val endDate: String,
+    val tours: Int,
+    val questions: Int,
+    val editors: List<Person>,
+    val gameJury: List<Person>,
+    val appealJury: List<Person>
+)
+
+data class Person(val name: String)
+
 enum class TournamentType {
     SYNCH,
     REAL_SYNCH,
