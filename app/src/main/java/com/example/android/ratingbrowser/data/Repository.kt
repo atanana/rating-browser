@@ -4,7 +4,10 @@ import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
 import kotlinx.coroutines.*
 import org.threeten.bp.LocalDate
 
-class Repository(private val queries: Queries, private val tournamentsPageParser: TournamentsPageParser) {
+class Repository(
+    private val queries: Queries,
+    private val tournamentsPageParser: TournamentsPageParser
+) {
     private val tournaments = listOf(
         TournamentShort(1, "first", LocalDate.now(), TournamentType.SYNCH, 5.0f),
         TournamentShort(2, "second", LocalDate.now(), TournamentType.REAL, 3.0f),
@@ -12,7 +15,7 @@ class Repository(private val queries: Queries, private val tournamentsPageParser
     )
 
     suspend fun getTournaments(): List<TournamentShort> {
-        val response = queries.getTournaments().await()
+        val response = queries.getTournaments()
         return withContext(Dispatchers.Default) {
             tournamentsPageParser.parse(response)
         }
