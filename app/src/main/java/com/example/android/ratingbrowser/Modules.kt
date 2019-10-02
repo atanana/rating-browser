@@ -5,6 +5,7 @@ import com.example.android.ratingbrowser.data.Repository
 import com.example.android.ratingbrowser.data.parsers.TournamentPageParser
 import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
 import com.example.android.ratingbrowser.screens.tournamentpage.TournamentPageViewModel
+import com.example.android.ratingbrowser.screens.tournamentpage.TournamentUsecase
 import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListUsecase
 import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -23,7 +24,9 @@ val mainModule = Kodein.Module("Main") {
 
     bind() from singleton { Repository(instance(), instance(), instance()) }
     bind() from singleton { createQueries() }
+
     bind() from singleton { TournamentListUsecase(instance()) }
+    bind() from singleton { TournamentUsecase(instance()) }
 
     bind() from singleton { TournamentsPageParser() }
     bind() from singleton { TournamentPageParser() }
