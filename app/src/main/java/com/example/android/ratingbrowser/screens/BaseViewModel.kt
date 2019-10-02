@@ -8,7 +8,7 @@ import com.example.android.ratingbrowser.livedata.SingleLiveEvent
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 
-abstract class BaseViewModel(app: Application) : AndroidViewModel(app), KodeinAware {
+abstract class BaseViewModel(protected val app: Application) : AndroidViewModel(app), KodeinAware {
     override val kodein by kodein()
 
     private val navigationData = SingleLiveEvent<NavDirections>()

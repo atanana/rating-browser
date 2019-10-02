@@ -9,6 +9,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 
 import com.example.android.ratingbrowser.R
+import com.example.android.ratingbrowser.data.StateWrapper
+import com.example.android.ratingbrowser.data.StateWrapper.Error
+import com.example.android.ratingbrowser.data.StateWrapper.Loading
+import com.example.android.ratingbrowser.data.StateWrapper.Ok
+import com.example.android.ratingbrowser.data.Tournament
 import com.example.android.ratingbrowser.screens.BaseFragment
 import kotlinx.android.synthetic.main.fragment_tournament_page.*
 import org.kodein.di.generic.instance
@@ -30,8 +35,16 @@ class TournamentPage : BaseFragment<TournamentPageViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.tournament.observe(viewLifecycleOwner, Observer { tournament ->
-            title.text = tournament.name
-        })
+        viewModel.tournament.observe(viewLifecycleOwner, Observer(this::processState))
+    }
+
+    private fun processState(state: StateWrapper<Tournament>) {
+        when (state) {
+            is Loading -> {
+            }
+            is Error -> {
+            }
+            is Ok -> title.text = state.data.name
+        }
     }
 }

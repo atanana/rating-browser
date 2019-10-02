@@ -2,4 +2,5 @@
     <string name="app_name">Rating Browser</string>
 
     <string name="error_get_tournaments">Не удалось получить список турниров!</string>
+    <string name="error_get_tournament">Не удалось получить информацию о турнире!</string>
 </resources>

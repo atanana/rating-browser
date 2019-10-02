@@ -18,7 +18,7 @@ class Repository(
         }
     }
 
-    suspend fun getTournament(tournamentId: Int): Tournament? {
+    suspend fun getTournament(tournamentId: Int): Tournament {
         val response = queries.getTournamentInfo(tournamentId)
         return withContext(Dispatchers.Default) {
             tournamentPageParser.parse(response)
