@@ -9,8 +9,9 @@ import androidx.lifecycle.Observer
 import com.brandongogetap.stickyheaders.StickyLayoutManager
 import com.brandongogetap.stickyheaders.exposed.StickyHeaderHandler
 import com.example.android.ratingbrowser.R
+import com.example.android.ratingbrowser.data.StateWrapper
 import com.example.android.ratingbrowser.screens.BaseFragment
-import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListState.*
+import com.example.android.ratingbrowser.data.StateWrapper.*
 import com.example.android.ratingbrowser.utils.setVisibility
 import kotlinx.android.synthetic.main.fragment_tournament_list.*
 import org.kodein.di.generic.instance
@@ -37,9 +38,9 @@ class TournamentList : BaseFragment<TournamentListViewModel>() {
         viewModel.tournaments.observe(viewLifecycleOwner, Observer(this::processState))
     }
 
-    private fun processState(state: TournamentListState) {
+    private fun processState(state: StateWrapper<TournamentsList>) {
         when (state) {
-            Loading -> {
+            is Loading -> {
                 tournaments.setVisibility(false)
                 loading.setVisibility(true)
                 errorMessage.setVisibility(false)
@@ -50,12 +51,12 @@ class TournamentList : BaseFragment<TournamentListViewModel>() {
                 errorMessage.setVisibility(true)
                 errorMessage.text = state.message
             }
-            is OK -> {
+            is Ok -> {
                 tournaments.setVisibility(true)
                 loading.setVisibility(false)
                 errorMessage.setVisibility(false)
-                tournamentsAdapter.items = state.tournamentsList.tournaments
-                tournaments.scrollToPosition(state.tournamentsList.scrollPosition)
+                tournamentsAdapter.items = state.data.tournaments
+                tournaments.scrollToPosition(state.data.scrollPosition)
             }
         }
     }
