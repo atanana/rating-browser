@@ -9,4 +9,7 @@ interface Queries {
 
     @GET("/tournament/{tournamentId}")
     suspend fun getTournamentInfo(@Path("tournamentId") tournamentId: Int): String
+
+    @GET("/api/tournaments/{tournamentId}.json")
+    suspend fun getTournamentInfoApi(@Path("tournamentId") tournamentId: Int): List<TournamentApiResponse>
 }

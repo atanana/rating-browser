@@ -9,8 +9,6 @@ class Repository(
     private val tournamentsPageParser: TournamentsPageParser,
     private val tournamentPageParser: TournamentPageParser
 ) {
-
-
     suspend fun getTournaments(): List<TournamentShort> {
         val response = queries.getTournaments()
         return withContext(Dispatchers.Default) {
@@ -18,10 +16,13 @@ class Repository(
         }
     }
 
-    suspend fun getTournament(tournamentId: Int): Tournament {
+    suspend fun getTournamentPage(tournamentId: Int): TournamentPageResponse {
         val response = queries.getTournamentInfo(tournamentId)
         return withContext(Dispatchers.Default) {
             tournamentPageParser.parse(response)
         }
     }
+
+    suspend fun getTournamentFromApi(tournamentId: Int): TournamentApiResponse =
+        queries.getTournamentInfoApi(tournamentId).first()
 }

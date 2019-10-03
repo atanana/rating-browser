@@ -14,7 +14,6 @@ data class Tournament(
     val name: String,
     val startDate: String,
     val endDate: String,
-    val tours: Int,
     val questions: Int,
     val editors: List<Person>,
     val gameJury: List<Person>,

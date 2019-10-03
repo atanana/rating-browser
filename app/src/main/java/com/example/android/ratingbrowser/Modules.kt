@@ -9,6 +9,10 @@ import com.example.android.ratingbrowser.screens.tournamentpage.TournamentUsecas
 import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListUsecase
 import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.UnstableDefault
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -32,12 +36,15 @@ val mainModule = Kodein.Module("Main") {
     bind() from singleton { TournamentPageParser() }
 }
 
+@UnstableDefault
 private fun createQueries(): Queries {
+    val contentType = MediaType.get("application/json")
     val retrofit = Retrofit.Builder()
         .baseUrl("https://rating.chgk.info/")
         .client(OkHttpClient())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addConverterFactory(ScalarsConverterFactory.create())
+        .addConverterFactory(Json.nonstrict.asConverterFactory(contentType))
         .build()
     return retrofit.create(Queries::class.java)
 }
