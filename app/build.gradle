@@ -8,6 +8,8 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
+apply plugin: 'kotlinx-serialization'
+
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -64,6 +66,8 @@ dependencies {
 
     implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
     implementation "org.kodein.di:kodein-di-framework-android-x:$kodein_version"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.13.0"
 
     implementation 'org.jsoup:jsoup:1.12.1'
     implementation 'com.jakewharton.timber:timber:4.7.1'
