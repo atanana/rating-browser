@@ -8,6 +8,10 @@
         <variable
             name="tournament"
             type="com.example.android.ratingbrowser.screens.tournamentslist.TournamentItem" />
+
+        <variable
+            name="clickListener"
+            type="kotlin.jvm.functions.Function1" />
     </data>
 
     <FrameLayout
@@ -18,6 +22,7 @@
             android:id="@+id/card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:onClick="@{() -> clickListener.invoke(tournament.id)}"
             app:cardBackgroundColor="@{tournament.color}"
             app:cardCornerRadius="3dp"
             app:cardElevation="1dp"
