@@ -29,6 +29,9 @@ android {
             useJUnitPlatform()
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 androidExtensions {

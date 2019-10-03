@@ -1,14 +1,15 @@
 package com.example.android.ratingbrowser.screens.tournamentslist
 
+import android.animation.ObjectAnimator
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
+import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.core.animation.addListener
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.ratingbrowser.R
-import com.example.android.ratingbrowser.utils.inflate
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_month.*
-import kotlinx.android.synthetic.main.item_tournament.*
+import com.example.android.ratingbrowser.databinding.ItemMonthBinding
+import com.example.android.ratingbrowser.databinding.ItemTournamentBinding
+import com.example.android.ratingbrowser.utils.inflater
 
 class TournamentsAdapter(private val clickListener: (Int) -> Unit) :
     RecyclerView.Adapter<TournamentsAdapter.TournamentItemViewHolder>() {
@@ -18,25 +19,21 @@ class TournamentsAdapter(private val clickListener: (Int) -> Unit) :
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TournamentItemViewHolder =
-        when (viewType) {
-            ITEM_TYPE_TOURNAMENT -> {
-                val view = parent.inflate(R.layout.item_tournament, false)
-                TournamentViewHolder(view)
-            }
-            ITEM_TYPE_MONTH -> {
-                val view = parent.inflate(R.layout.item_month, false)
-                MonthSeparatorViewHolder(view)
-            }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TournamentItemViewHolder {
+        val inflater = parent.inflater()
+        return when (viewType) {
+            ITEM_TYPE_TOURNAMENT -> TournamentViewHolder(ItemTournamentBinding.inflate(inflater, parent, false))
+            ITEM_TYPE_MONTH -> MonthSeparatorViewHolder(ItemMonthBinding.inflate(inflater, parent, false))
             else -> throw IllegalStateException("Unknown type $viewType")
         }
+    }
 
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: TournamentItemViewHolder, position: Int) {
         when (val item = items[position]) {
-            is TournamentItem -> (holder as TournamentViewHolder).bind(item)
-            is MonthSeparator -> (holder as MonthSeparatorViewHolder).bind(item)
+            is TournamentItem -> (holder as TournamentViewHolder).binding.tournament = item
+            is MonthSeparator -> (holder as MonthSeparatorViewHolder).binding.month = item
         }
     }
 
@@ -46,28 +43,14 @@ class TournamentsAdapter(private val clickListener: (Int) -> Unit) :
             is MonthSeparator -> ITEM_TYPE_MONTH
         }
 
-    abstract class TournamentItemViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
-        LayoutContainer
+    abstract class TournamentItemViewHolder(binding: ViewDataBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
-    inner class MonthSeparatorViewHolder(view: View) : TournamentItemViewHolder(view) {
-        fun bind(data: MonthSeparator) {
-            month_title.text = data.title
-        }
-    }
+    inner class MonthSeparatorViewHolder(val binding: ItemMonthBinding) :
+        TournamentItemViewHolder(binding)
 
-    inner class TournamentViewHolder(view: View) : TournamentItemViewHolder(view) {
-        fun bind(data: TournamentItem) {
-            title.text = data.title
-            difficulty.text = data.difficulty
-            date.text = data.date
-
-            val context = containerView.context
-            val color = ResourcesCompat.getColor(context.resources, data.color, context.theme)
-            card.setCardBackgroundColor(color)
-
-            containerView.setOnClickListener { clickListener(data.id) }
-        }
-    }
+    inner class TournamentViewHolder(val binding: ItemTournamentBinding) :
+        TournamentItemViewHolder(binding)
 
     companion object {
         private const val ITEM_TYPE_TOURNAMENT = 0

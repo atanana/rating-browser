@@ -25,7 +25,7 @@ val mainModule = Kodein.Module("Main") {
     bind() from singleton { Repository(instance(), instance(), instance()) }
     bind() from singleton { createQueries() }
 
-    bind() from singleton { TournamentListUsecase(instance()) }
+    bind() from singleton { TournamentListUsecase(instance(), instance()) }
     bind() from singleton { TournamentUsecase(instance()) }
 
     bind() from singleton { TournamentsPageParser() }

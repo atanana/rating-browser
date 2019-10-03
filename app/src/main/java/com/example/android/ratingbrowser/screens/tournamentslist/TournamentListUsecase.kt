@@ -1,5 +1,7 @@
 package com.example.android.ratingbrowser.screens.tournamentslist
 
+import android.content.Context
+import androidx.core.content.ContextCompat
 import com.example.android.ratingbrowser.R
 import com.example.android.ratingbrowser.data.Repository
 import com.example.android.ratingbrowser.data.TournamentShort
@@ -7,7 +9,7 @@ import com.example.android.ratingbrowser.data.TournamentType
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 
-class TournamentListUsecase(private val repository: Repository) {
+class TournamentListUsecase(private val repository: Repository, private val context: Context) {
     suspend fun get(): TournamentsList {
         val tournaments = repository.getTournaments()
         val scrollPosition = calculateScrollPosition(tournaments)
@@ -41,14 +43,18 @@ class TournamentListUsecase(private val repository: Repository) {
     private fun TournamentShort.toItem(): TournamentItem {
         val date = endDate.format(DateTimeFormatter.ISO_DATE)
         val difficulty = difficulty?.toString() ?: "-"
-        val color = when (type) {
+        return TournamentItem(id, name, date, difficulty, getColor(type))
+    }
+
+    private fun getColor(tournamentType: TournamentType): Int {
+        val color = when (tournamentType) {
             TournamentType.REAL_SYNCH,
             TournamentType.SYNCH -> R.color.tournament_synch
             TournamentType.REAL -> R.color.tournament_real
             TournamentType.COMMON -> R.color.tournament_common
             else -> R.color.tournament_default
         }
-        return TournamentItem(id, name, date, difficulty, color)
+        return ContextCompat.getColor(context, color)
     }
 
     companion object {

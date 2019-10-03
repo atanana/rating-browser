@@ -21,3 +21,5 @@ fun ViewGroup.inflate(@LayoutRes layout: Int, attachToRoot: Boolean = false): Vi
 fun View.setVisibility(isVisible: Boolean) {
     visibility = if (isVisible) View.VISIBLE else View.GONE
 }
+
+fun View.inflater() = LayoutInflater.from(context)
