@@ -3,17 +3,20 @@ package com.example.android.ratingbrowser.screens.tournamentpage
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import com.example.android.ratingbrowser.R
 import com.example.android.ratingbrowser.data.Tournament
+import com.example.android.ratingbrowser.databinding.FragmentTournamentPageBinding
 import com.example.android.ratingbrowser.screens.BaseFragment
+import com.example.android.ratingbrowser.utils.inflater
 import kotlinx.android.synthetic.main.fragment_tournament_page.*
 import org.kodein.di.generic.instance
 
-class TournamentPage : BaseFragment<TournamentPageViewModel>() {
+class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentPageBinding>() {
     override val viewModel: TournamentPageViewModel by instance()
 
-    override val customLayout = R.layout.fragment_tournament_page
+    override fun createBinding(container: ViewGroup): FragmentTournamentPageBinding =
+        FragmentTournamentPageBinding.inflate(container.inflater(), container, true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -16,13 +16,15 @@ import kotlinx.android.synthetic.main.fragment_base.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 
-abstract class BaseFragment<T : BaseViewModel> : Fragment(R.layout.fragment_base), KodeinAware {
+abstract class BaseFragment<VM : BaseViewModel, B : ViewDataBinding> :
+    Fragment(R.layout.fragment_base), KodeinAware {
     override val kodein by kodein()
 
-    protected abstract val viewModel: T
+    protected abstract val viewModel: VM
 
-    @get:LayoutRes
-    protected abstract val customLayout: Int
+    protected lateinit var binding: B
+
+    protected abstract fun createBinding(container: ViewGroup): B
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -37,7 +39,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment(R.layout.fragment_base
         savedInstanceState: Bundle?
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
-        inflater.inflate(customLayout, view?.findViewById(R.id.customRoot))
+        binding = createBinding(view!!.findViewById(R.id.customRoot))
         return view
     }
 
