@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Rating Browser</string>
 
+    <string name="tournament_dates_format">с %s по %s</string>
+    <string name="tournament_questions_count_format">%d вопросов</string>
+
     <string name="error_get_tournaments">Не удалось получить список турниров!</string>
     <string name="error_get_tournament">Не удалось получить информацию о турнире!</string>
 </resources>
