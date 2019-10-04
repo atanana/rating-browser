@@ -9,7 +9,6 @@ import com.example.android.ratingbrowser.data.Tournament
 import com.example.android.ratingbrowser.databinding.FragmentTournamentPageBinding
 import com.example.android.ratingbrowser.screens.BaseFragment
 import com.example.android.ratingbrowser.utils.inflater
-import kotlinx.android.synthetic.main.fragment_tournament_page.*
 import org.kodein.di.generic.instance
 
 class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentPageBinding>() {
@@ -33,6 +32,6 @@ class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentP
     }
 
     private fun processData(tournament: Tournament) {
-        title.text = tournament.name
+        binding.tournament = tournament
     }
 }
