@@ -1,6 +1,8 @@
 package com.example.android.ratingbrowser.screens.tournamentpage
 
 
+import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import com.example.android.ratingbrowser.data.Tournament
 import com.example.android.ratingbrowser.databinding.FragmentTournamentPageBinding
 import com.example.android.ratingbrowser.screens.BaseFragment
 import com.example.android.ratingbrowser.utils.inflater
+import com.example.android.ratingbrowser.utils.setStyle
 import org.kodein.di.generic.instance
 
 class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentPageBinding>() {
@@ -63,9 +66,12 @@ class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentP
 
     private fun createPersonsHeader(title: String): View = TextView(requireContext()).apply {
         text = title
+        setStyle(R.style.TextAppearance_MaterialComponents_Subtitle1)
+        setTypeface(null, Typeface.BOLD)
     }
 
     private fun createPersonView(person: Person): View = TextView(requireContext()).apply {
         text = person.name
+        setStyle(R.style.TextAppearance_MaterialComponents_Subtitle1)
     }
 }

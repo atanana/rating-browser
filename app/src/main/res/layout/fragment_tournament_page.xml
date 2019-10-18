@@ -49,6 +49,7 @@
             android:id="@+id/personsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/questions" />
 

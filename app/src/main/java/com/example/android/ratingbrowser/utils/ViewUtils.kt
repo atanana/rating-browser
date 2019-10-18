@@ -1,10 +1,14 @@
 package com.example.android.ratingbrowser.utils
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.annotation.StyleRes
+import com.example.android.ratingbrowser.R
 
 fun Context.inflate(
     @LayoutRes layout: Int,
@@ -23,3 +27,11 @@ fun View.setVisibility(isVisible: Boolean) {
 }
 
 fun View.inflater(): LayoutInflater = LayoutInflater.from(context)
+
+fun TextView.setStyle(@StyleRes style: Int) {
+    if (Build.VERSION.SDK_INT < 23) {
+        setTextAppearance(context, style)
+    } else {
+        setTextAppearance(style)
+    }
+}
