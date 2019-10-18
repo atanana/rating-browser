@@ -37,12 +37,20 @@
             tools:text="12.06.2019" />
 
         <TextView
+            android:id="@+id/questions"
             style="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{@string/tournament_questions_count_format(tournament.questions)}"
             app:layout_constraintTop_toBottomOf="@id/dates"
             tools:text="Количество вопросов: 36" />
+
+        <LinearLayout
+            android:id="@+id/personsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/questions" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
