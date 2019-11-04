@@ -10,49 +10,54 @@
             type="com.example.android.ratingbrowser.data.Tournament" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/default_padding">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/TextAppearance.MaterialComponents.Headline5"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/default_padding"
-            android:text="@{tournament.name}"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:context=".screens.tournamentpage.TournamentPage"
-            tools:text="Мурманский ёрш 2009" />
+            android:padding="@dimen/default_padding">
 
-        <TextView
-            android:id="@+id/dates"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/default_half_padding"
-            android:text="@{@string/tournament_dates_format(tournament.startDate, tournament.endDate)}"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            tools:text="12.06.2019" />
+            <TextView
+                android:id="@+id/title"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/default_padding"
+                android:text="@{tournament.name}"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:context=".screens.tournamentpage.TournamentPage"
+                tools:text="Мурманский ёрш 2009" />
 
-        <TextView
-            android:id="@+id/questions"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{@string/tournament_questions_count_format(tournament.questions)}"
-            app:layout_constraintTop_toBottomOf="@id/dates"
-            tools:text="Количество вопросов: 36" />
+            <TextView
+                android:id="@+id/dates"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/default_half_padding"
+                android:text="@{@string/tournament_dates_format(tournament.startDate, tournament.endDate)}"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                tools:text="12.06.2019" />
 
-        <LinearLayout
-            android:id="@+id/personsContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_padding"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/questions" />
+            <TextView
+                android:id="@+id/questions"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{@string/tournament_questions_count_format(tournament.questions)}"
+                app:layout_constraintTop_toBottomOf="@id/dates"
+                tools:text="Количество вопросов: 36" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/personsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/questions" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 </layout>

@@ -60,7 +60,7 @@ class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentP
             return emptyList()
         }
         val result = listOf(createPersonsHeader(resources.getString(title)))
-        return result + persons.map(this::createPersonView)
+        return result + persons.map(this::createPersonView) + listOf(createSpannerView())
     }
 
     private fun createPersonsHeader(title: String): View = TextView(requireContext()).apply {
@@ -72,5 +72,9 @@ class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentP
     private fun createPersonView(person: Person): View = TextView(requireContext()).apply {
         text = person.name
         setStyle(R.style.TextAppearance_MaterialComponents_Subtitle1)
+    }
+
+    private fun createSpannerView(): View = View(requireContext()).apply {
+        minimumHeight = resources.getDimensionPixelSize(R.dimen.default_padding)
     }
 }
