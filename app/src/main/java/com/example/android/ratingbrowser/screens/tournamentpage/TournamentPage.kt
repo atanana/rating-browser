@@ -2,11 +2,11 @@ package com.example.android.ratingbrowser.screens.tournamentpage
 
 
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
 import com.example.android.ratingbrowser.R
 import com.example.android.ratingbrowser.data.Person
@@ -50,17 +50,16 @@ class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentP
         }
     }
 
-    private fun buildPersonsViews(tournament: Tournament): List<View> {
-        val result = arrayListOf<View>()
-        if (tournament.editors.isNotEmpty()) {
-            val editorsTitle = resources.getString(R.string.editors_title)
-            result.addAll(partialBuildPersonsViews(tournament.editors, editorsTitle))
-        }
-        return result
-    }
+    private fun buildPersonsViews(tournament: Tournament): List<View> =
+        partialBuildPersonsViews(tournament.editors, R.string.editors_title) +
+                partialBuildPersonsViews(tournament.editors, R.string.game_jury_title) +
+                partialBuildPersonsViews(tournament.editors, R.string.appeals_jury_title)
 
-    private fun partialBuildPersonsViews(persons: List<Person>, title: String): List<View> {
-        val result = listOf(createPersonsHeader(title))
+    private fun partialBuildPersonsViews(persons: List<Person>, @StringRes title: Int): List<View> {
+        if (persons.isEmpty()) {
+            return emptyList()
+        }
+        val result = listOf(createPersonsHeader(resources.getString(title)))
         return result + persons.map(this::createPersonView)
     }
 

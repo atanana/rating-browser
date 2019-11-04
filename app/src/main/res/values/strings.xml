@@ -5,6 +5,8 @@
     <string name="tournament_questions_count_format">%d вопросов</string>
 
     <string name="editors_title">Редакторы</string>
+    <string name="game_jury_title">Игровое жюри</string>
+    <string name="appeals_jury_title">Апелляционное жюри</string>
 
     <string name="error_get_tournaments">Не удалось получить список турниров!</string>
     <string name="error_get_tournament">Не удалось получить информацию о турнире!</string>
