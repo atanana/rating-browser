@@ -68,6 +68,9 @@ dependencies {
     implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
     implementation "org.kodein.di:kodein-di-framework-android-x:$kodein_version"
 
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.13.0"
 
     implementation 'org.jsoup:jsoup:1.12.1'
