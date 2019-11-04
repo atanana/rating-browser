@@ -44,8 +44,7 @@ class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentP
 
     private fun updatePersonsViews(tournament: Tournament) {
         binding.personsContainer.removeAllViews()
-        val personsViews = buildPersonsViews(tournament)
-        for (personView in personsViews) {
+        for (personView in buildPersonsViews(tournament)) {
             binding.personsContainer.addView(personView)
         }
     }
