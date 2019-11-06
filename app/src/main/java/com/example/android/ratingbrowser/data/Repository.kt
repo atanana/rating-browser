@@ -4,14 +4,14 @@ import com.example.android.ratingbrowser.data.db.AppDatabase
 import com.example.android.ratingbrowser.data.db.TournamentEntity
 import com.example.android.ratingbrowser.data.parsers.TournamentPageParser
 import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class Repository(
     private val queries: Queries,
     private val database: AppDatabase,
     private val tournamentsPageParser: TournamentsPageParser,
-    private val tournamentPageParser: TournamentPageParser
+    private val tournamentPageParser: TournamentPageParser,
+    private val repositoryScope: CoroutineScope = GlobalScope
 ) {
     suspend fun getTournaments(): List<TournamentShort> {
         val response = queries.getTournaments()
@@ -30,7 +30,9 @@ class Repository(
     suspend fun getTournamentFromApi(tournamentId: Int): TournamentApiData {
         val tournament = database.tournamentDao().getTournament(tournamentId)
         return if (tournament != null) {
-            loadTournamentFromApi(tournamentId)
+            repositoryScope.launch {
+                loadTournamentFromApi(tournamentId)
+            }
             tournament.toData()
         } else {
             loadTournamentFromApi(tournamentId)
