@@ -21,18 +21,14 @@ data class TournamentEntity(
 @Entity(tableName = "persons", indices = [Index(value = ["name"], unique = true)])
 data class PersonEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
     val name: String
 )
 
+fun Collection<PersonEntity>.toStrings() = map { it.name }
+
 @Entity(
     tableName = "person_relations", foreignKeys = [
-        ForeignKey(
-            entity = TournamentEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["tournamentId"],
-            onDelete = ForeignKey.CASCADE
-        ),
         ForeignKey(
             entity = PersonEntity::class,
             parentColumns = ["id"],
