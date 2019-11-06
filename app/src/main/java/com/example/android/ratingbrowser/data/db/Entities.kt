@@ -1,4 +1,4 @@
-package com.example.android.ratingbrowser.data
+package com.example.android.ratingbrowser.data.db
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -36,10 +36,15 @@ data class PersonEntity(
             childColumns = ["personId"],
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    primaryKeys = ["tournamentId", "personId"]
 )
-data class PersonRelationEntity(val type: RelationType, val tournamentId: Int, val personId: Int)
+data class PersonRelationEntity(
+    val type: PersonRelationType,
+    val tournamentId: Int,
+    val personId: Int
+)
 
-enum class RelationType {
+enum class PersonRelationType {
     EDITOR, GAME_JURY, APPEALS_JURY
 }

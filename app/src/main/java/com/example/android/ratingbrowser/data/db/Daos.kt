@@ -1,4 +1,4 @@
-package com.example.android.ratingbrowser.data
+package com.example.android.ratingbrowser.data.db
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface TournamentDao {
+interface TournamentsDao {
     @Query("select * from tournaments where id = :id")
     suspend fun getTournament(id: Int): TournamentEntity?
 
@@ -26,7 +26,7 @@ interface PersonsDao {
 @Dao
 interface PersonRelationsDao {
     @Query("select * from person_relations where tournamentId = :tournamentId and type = :type")
-    suspend fun getRelations(tournamentId: Int, type: RelationType): List<PersonRelationEntity>
+    suspend fun getRelations(tournamentId: Int, type: PersonRelationType): List<PersonRelationEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(personRelation: PersonRelationEntity)

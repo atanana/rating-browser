@@ -1,7 +1,10 @@
 package com.example.android.ratingbrowser
 
+import android.content.Context
+import androidx.room.Room
 import com.example.android.ratingbrowser.data.Queries
 import com.example.android.ratingbrowser.data.Repository
+import com.example.android.ratingbrowser.data.db.AppDatabase
 import com.example.android.ratingbrowser.data.parsers.TournamentPageParser
 import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
 import com.example.android.ratingbrowser.screens.tournamentpage.TournamentPageViewModel
@@ -22,6 +25,7 @@ import org.kodein.di.generic.singleton
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
+@UnstableDefault
 val mainModule = Kodein.Module("Main") {
     bind() from provider { TournamentListViewModel(instance()) }
     bind() from provider { TournamentPageViewModel(instance()) }
@@ -34,6 +38,8 @@ val mainModule = Kodein.Module("Main") {
 
     bind() from singleton { TournamentsPageParser() }
     bind() from singleton { TournamentPageParser() }
+
+    bind() from singleton { createDatabase(instance()) }
 }
 
 @UnstableDefault
@@ -48,3 +54,6 @@ private fun createQueries(): Queries {
         .build()
     return retrofit.create(Queries::class.java)
 }
+
+private fun createDatabase(context: Context) =
+    Room.databaseBuilder(context, AppDatabase::class.java, "main-db").build()
