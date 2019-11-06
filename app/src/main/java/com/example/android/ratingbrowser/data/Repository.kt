@@ -1,9 +1,11 @@
 package com.example.android.ratingbrowser.data
 
 import com.example.android.ratingbrowser.data.db.AppDatabase
+import com.example.android.ratingbrowser.data.db.TournamentEntity
 import com.example.android.ratingbrowser.data.parsers.TournamentPageParser
 import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
 import kotlinx.coroutines.*
+import timber.log.Timber
 
 class Repository(
     private val queries: Queries,
@@ -26,5 +28,19 @@ class Repository(
     }
 
     suspend fun getTournamentFromApi(tournamentId: Int): TournamentApiData =
-        queries.getTournamentInfoApi(tournamentId).first().toData()
+        database.tournamentDao().getTournament(tournamentId)?.toData()
+            ?: loadTournamentFromApi(tournamentId)
+
+    private suspend fun loadTournamentFromApi(tournamentId: Int): TournamentApiData {
+        val response = queries.getTournamentInfoApi(tournamentId).first()
+        val tournamentEntity = TournamentEntity(
+            tournamentId,
+            response.longName,
+            response.dateStart,
+            response.dateEnd,
+            response.questionsTotal
+        )
+        database.tournamentDao().add(tournamentEntity)
+        return response.toData()
+    }
 }

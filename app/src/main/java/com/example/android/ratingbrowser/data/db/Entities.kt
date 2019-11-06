@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.example.android.ratingbrowser.data.TournamentApiData
 
 @Entity(tableName = "tournaments")
 data class TournamentEntity(
@@ -12,8 +13,10 @@ data class TournamentEntity(
     val name: String,
     val startDate: String,
     val endDate: String,
-    val questions: Int
-)
+    val questions: String
+) {
+    fun toData() = TournamentApiData(name, startDate, endDate, questions)
+}
 
 @Entity(tableName = "persons", indices = [Index(value = ["name"], unique = true)])
 data class PersonEntity(
