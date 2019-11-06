@@ -1,11 +1,13 @@
 package com.example.android.ratingbrowser.data
 
+import com.example.android.ratingbrowser.data.db.AppDatabase
 import com.example.android.ratingbrowser.data.parsers.TournamentPageParser
 import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
 import kotlinx.coroutines.*
 
 class Repository(
     private val queries: Queries,
+    private val database: AppDatabase,
     private val tournamentsPageParser: TournamentsPageParser,
     private val tournamentPageParser: TournamentPageParser
 ) {
@@ -16,13 +18,13 @@ class Repository(
         }
     }
 
-    suspend fun getTournamentPage(tournamentId: Int): TournamentPageResponse {
+    suspend fun getTournamentPage(tournamentId: Int): TournamentPageData {
         val response = queries.getTournamentInfo(tournamentId)
         return withContext(Dispatchers.Default) {
-            tournamentPageParser.parse(response)
+            tournamentPageParser.parse(response).toData()
         }
     }
 
-    suspend fun getTournamentFromApi(tournamentId: Int): TournamentApiResponse =
-        queries.getTournamentInfoApi(tournamentId).first()
+    suspend fun getTournamentFromApi(tournamentId: Int): TournamentApiData =
+        queries.getTournamentInfoApi(tournamentId).first().toData()
 }

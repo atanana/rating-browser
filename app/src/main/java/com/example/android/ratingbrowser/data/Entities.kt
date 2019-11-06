@@ -20,6 +20,19 @@ data class Tournament(
     val appealJury: List<Person>
 )
 
+data class TournamentPageData(
+    val editors: List<String>,
+    val gameJury: List<String>,
+    val appealJury: List<String>
+)
+
+data class TournamentApiData(
+    val name: String,
+    val startDate: String,
+    val endDate: String,
+    val questions: String
+)
+
 data class Person(val name: String)
 
 enum class TournamentType {

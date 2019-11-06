@@ -20,10 +20,14 @@ data class TournamentApiResponse(
     val siteUrl: String?,
     @SerialName("tournament_in_rating")
     val tournamentInRating: String
-)
+) {
+    fun toData() = TournamentApiData(longName, dateStart, dateEnd, questionsTotal)
+}
 
 data class TournamentPageResponse(
     val editors: List<String>,
     val gameJury: List<String>,
     val appealJury: List<String>
-)
+) {
+    fun toData() = TournamentPageData(editors, gameJury, appealJury)
+}

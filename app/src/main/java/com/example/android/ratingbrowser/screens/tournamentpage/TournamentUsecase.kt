@@ -9,10 +9,10 @@ class TournamentUsecase(private val repository: Repository) {
         val apiResponse = repository.getTournamentFromApi(tournamentId)
         val pageResponse = repository.getTournamentPage(tournamentId)
         return Tournament(
-            name = apiResponse.longName,
-            startDate = apiResponse.dateStart,
-            endDate = apiResponse.dateEnd,
-            questions = apiResponse.questionsTotal.toInt(),
+            name = apiResponse.name,
+            startDate = apiResponse.startDate,
+            endDate = apiResponse.endDate,
+            questions = apiResponse.questions.toInt(),
             editors = pageResponse.editors.toPersons(),
             gameJury = pageResponse.gameJury.toPersons(),
             appealJury = pageResponse.appealJury.toPersons()
