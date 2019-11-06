@@ -4,8 +4,8 @@ import com.example.android.ratingbrowser.data.db.AppDatabase
 import com.example.android.ratingbrowser.data.db.TournamentEntity
 import com.example.android.ratingbrowser.data.parsers.TournamentPageParser
 import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
-import kotlinx.coroutines.*
-import timber.log.Timber
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class Repository(
     private val queries: Queries,
@@ -27,9 +27,15 @@ class Repository(
         }
     }
 
-    suspend fun getTournamentFromApi(tournamentId: Int): TournamentApiData =
-        database.tournamentDao().getTournament(tournamentId)?.toData()
-            ?: loadTournamentFromApi(tournamentId)
+    suspend fun getTournamentFromApi(tournamentId: Int): TournamentApiData {
+        val tournament = database.tournamentDao().getTournament(tournamentId)
+        return if (tournament != null) {
+            loadTournamentFromApi(tournamentId)
+            tournament.toData()
+        } else {
+            loadTournamentFromApi(tournamentId)
+        }
+    }
 
     private suspend fun loadTournamentFromApi(tournamentId: Int): TournamentApiData {
         val response = queries.getTournamentInfoApi(tournamentId).first()
