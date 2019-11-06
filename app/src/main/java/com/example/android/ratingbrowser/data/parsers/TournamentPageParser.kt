@@ -9,11 +9,14 @@ class TournamentPageParser {
         val document = Jsoup.parse(page)
         val cards = document.select("#tournament_info .card")
         return TournamentPageResponse(
-            editors = extractData(cards[1]),
-            gameJury = extractData(cards[2]),
-            appealJury = extractData(cards[3])
+            editors = extractData(cards.getOrNull(1)),
+            gameJury = extractData(cards.getOrNull(2)),
+            appealJury = extractData(cards.getOrNull(3))
         )
     }
 
-    private fun extractData(card: Element): List<String> = card.select(".row").map(Element::text)
+    private fun extractData(card: Element?): List<String> =
+        card?.select(".row")
+            ?.map(Element::text)
+            .orEmpty()
 }
