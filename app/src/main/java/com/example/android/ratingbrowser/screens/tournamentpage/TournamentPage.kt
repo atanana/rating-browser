@@ -51,8 +51,8 @@ class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentP
 
     private fun buildPersonsViews(tournament: Tournament): List<View> =
         partialBuildPersonsViews(tournament.editors, R.string.editors_title) +
-                partialBuildPersonsViews(tournament.editors, R.string.game_jury_title) +
-                partialBuildPersonsViews(tournament.editors, R.string.appeals_jury_title)
+                partialBuildPersonsViews(tournament.gameJury, R.string.game_jury_title) +
+                partialBuildPersonsViews(tournament.appealJury, R.string.appeals_jury_title)
 
     private fun partialBuildPersonsViews(persons: List<Person>, @StringRes title: Int): List<View> {
         if (persons.isEmpty()) {
