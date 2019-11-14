@@ -26,6 +26,4 @@ data class TournamentPageResponse(
     val editors: List<String>,
     val gameJury: List<String>,
     val appealJury: List<String>
-) {
-    fun toData() = TournamentPageData(editors, gameJury, appealJury)
-}
+)

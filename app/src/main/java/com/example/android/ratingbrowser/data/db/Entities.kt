@@ -23,8 +23,6 @@ data class PersonEntity(
     val name: String
 )
 
-fun Collection<PersonEntity>.toStrings() = map { it.name }
-
 @Entity(
     tableName = "person_relations", foreignKeys = [
         ForeignKey(

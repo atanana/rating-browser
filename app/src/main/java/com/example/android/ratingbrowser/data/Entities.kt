@@ -21,6 +21,7 @@ data class Tournament(
 )
 
 data class TournamentPageData(
+    val id: Int,
     val editors: List<String>,
     val gameJury: List<String>,
     val appealJury: List<String>
