@@ -1,7 +1,18 @@
 package com.example.android.ratingbrowser.data.db
 
-import androidx.room.*
-import com.example.android.ratingbrowser.data.Person
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+
+@Dao
+interface TournamentsShortDao {
+    @Query("select * from tournaments_short where id = :id")
+    suspend fun getTournament(id: Int): TournamentShortEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun add(tournament: TournamentShortEntity)
+}
 
 @Dao
 interface TournamentsDao {

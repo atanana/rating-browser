@@ -4,7 +4,18 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.example.android.ratingbrowser.data.TournamentApiData
+import com.example.android.ratingbrowser.data.TournamentType
+import org.threeten.bp.LocalDate
+
+@Entity(tableName = "tournaments_short")
+data class TournamentShortEntity(
+    @PrimaryKey
+    val id: Int,
+    val name: String,
+    val endDate: LocalDate,
+    val type: TournamentType,
+    val difficulty: Float?
+)
 
 @Entity(tableName = "tournaments")
 data class TournamentEntity(
