@@ -2,7 +2,10 @@ package com.example.android.ratingbrowser.data.db
 
 import androidx.room.TypeConverter
 import com.example.android.ratingbrowser.data.TournamentType
+import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
 
 class Converters {
     @TypeConverter
@@ -12,10 +15,12 @@ class Converters {
     fun toPersonRelationType(type: Int): PersonRelationType = PersonRelationType.values()[type]
 
     @TypeConverter
-    fun fromLocalDate(date: LocalDate): String = date.toString()
+    fun fromLocalDate(date: LocalDate): Long =
+        date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
     @TypeConverter
-    fun toLocalDate(data: String): LocalDate = LocalDate.parse(data)
+    fun toLocalDate(data: Long): LocalDate =
+        LocalDateTime.ofInstant(Instant.ofEpochMilli(data), ZoneId.systemDefault()).toLocalDate()
 
     @TypeConverter
     fun fromTournamentType(type: TournamentType): Int = type.ordinal
