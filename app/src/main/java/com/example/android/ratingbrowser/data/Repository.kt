@@ -3,18 +3,18 @@ package com.example.android.ratingbrowser.data
 import com.example.android.ratingbrowser.data.db.*
 import com.example.android.ratingbrowser.data.parsers.TournamentPageParser
 import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
+import com.example.android.ratingbrowser.data.resources.TournamentApiResource
 import kotlinx.coroutines.*
-import timber.log.Timber
 
 class Repository(
     private val queries: Queries,
     database: AppDatabase,
     private val tournamentsPageParser: TournamentsPageParser,
     private val tournamentPageParser: TournamentPageParser,
+    private val tournamentApiResource: TournamentApiResource,
     private val repositoryScope: CoroutineScope = GlobalScope
 ) {
     private val relationsDao = database.personRelationsDao()
-    private val tournamentsDao = database.tournamentDao()
     private val personsDao = database.personsDao()
 
     suspend fun getTournaments(): List<TournamentShort> {
@@ -55,7 +55,6 @@ class Repository(
     ) {
         for (person in persons) {
             val personId = personsDao.tryAdd(PersonEntity(name = person))
-            Timber.e("test $personId")
             relationsDao.add(PersonRelationEntity(type, tournamentId, personId))
         }
     }
@@ -76,27 +75,6 @@ class Repository(
     }
 
     suspend fun getTournamentFromApi(tournamentId: Int): TournamentApiData {
-        val tournament = tournamentsDao.getTournament(tournamentId)
-        return if (tournament != null) {
-            repositoryScope.launch {
-                loadTournamentFromApi(tournamentId)
-            }
-            tournament.toData()
-        } else {
-            loadTournamentFromApi(tournamentId)
-        }
-    }
-
-    private suspend fun loadTournamentFromApi(tournamentId: Int): TournamentApiData {
-        val response = queries.getTournamentInfoApi(tournamentId).first()
-        val tournamentEntity = TournamentEntity(
-            tournamentId,
-            response.longName,
-            response.dateStart,
-            response.dateEnd,
-            response.questionsTotal
-        )
-        tournamentsDao.add(tournamentEntity)
-        return response.toData()
+        return tournamentApiResource.get(tournamentId)
     }
 }

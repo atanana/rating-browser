@@ -14,9 +14,7 @@ data class TournamentEntity(
     val startDate: String,
     val endDate: String,
     val questions: String
-) {
-    fun toData() = TournamentApiData(name, startDate, endDate, questions)
-}
+)
 
 @Entity(tableName = "persons", indices = [Index(value = ["name"], unique = true)])
 data class PersonEntity(
