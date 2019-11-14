@@ -7,11 +7,14 @@ import androidx.room.Query
 
 @Dao
 interface TournamentsShortDao {
-    @Query("select * from tournaments_short where id = :id")
-    suspend fun getTournament(id: Int): TournamentShortEntity?
+    @Query("select * from tournaments_short")
+    suspend fun tournaments(): List<TournamentShortEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun add(tournament: TournamentShortEntity)
+    suspend fun add(tournaments: List<TournamentShortEntity>)
+
+    @Query("delete from tournaments_short")
+    suspend fun clear()
 }
 
 @Dao

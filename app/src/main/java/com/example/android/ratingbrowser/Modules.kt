@@ -9,6 +9,7 @@ import com.example.android.ratingbrowser.data.parsers.TournamentPageParser
 import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
 import com.example.android.ratingbrowser.data.resources.TournamentApiResource
 import com.example.android.ratingbrowser.data.resources.TournamentPageResource
+import com.example.android.ratingbrowser.data.resources.TournamentsListResource
 import com.example.android.ratingbrowser.screens.tournamentpage.TournamentPageViewModel
 import com.example.android.ratingbrowser.screens.tournamentpage.TournamentUsecase
 import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListUsecase
@@ -32,7 +33,7 @@ val mainModule = Kodein.Module("Main") {
     bind() from provider { TournamentListViewModel(instance()) }
     bind() from provider { TournamentPageViewModel(instance()) }
 
-    bind() from singleton { Repository(instance(), instance(), instance(), instance()) }
+    bind() from singleton { Repository(instance(), instance(), instance()) }
     bind() from singleton { createQueries() }
 
     bind() from singleton { TournamentListUsecase(instance(), instance()) }
@@ -43,6 +44,7 @@ val mainModule = Kodein.Module("Main") {
 
     bind() from singleton { TournamentApiResource(instance(), instance()) }
     bind() from singleton { TournamentPageResource(instance(), instance(), instance()) }
+    bind() from singleton { TournamentsListResource(instance(), instance(), instance()) }
 
     bind() from singleton { createDatabase(instance()) }
 }
