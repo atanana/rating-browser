@@ -3,39 +3,32 @@ package com.example.android.ratingbrowser.screens.tournamentpage
 import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.liveData
 import com.example.android.ratingbrowser.R
-import com.example.android.ratingbrowser.data.Repository
 import com.example.android.ratingbrowser.data.StateWrapper
-import com.example.android.ratingbrowser.data.StateWrapper.Error
-import com.example.android.ratingbrowser.data.StateWrapper.Loading
-import com.example.android.ratingbrowser.data.StateWrapper.Ok
+import com.example.android.ratingbrowser.data.StateWrapper.*
 import com.example.android.ratingbrowser.data.Tournament
-import com.example.android.ratingbrowser.data.TournamentShort
 import com.example.android.ratingbrowser.screens.BaseViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
 import org.kodein.di.generic.instance
 import timber.log.Timber
 
-class TournamentPageViewModel(app: Application) : BaseViewModel(app) {
+class TournamentPageViewModel(
+    app: Application,
+    private val argumentsProvider: () -> Bundle
+) : BaseViewModel(app) {
     private val tournamentUsecase: TournamentUsecase by instance()
 
-    private val tournamentData = MutableLiveData<StateWrapper<Tournament>>()
-    val tournament: LiveData<StateWrapper<Tournament>> = tournamentData
-
-    fun init(bundle: Bundle) {
-        val args = TournamentPageArgs.fromBundle(bundle)
-        tournamentData.value = Loading()
-        viewModelScope.launch {
-            try {
-                val tournament = tournamentUsecase.get(args.tournamentId)
-                tournamentData.value = Ok(tournament)
-            } catch (e: Exception) {
-                Timber.e(e)
-                val errorMessage = app.getString(R.string.error_get_tournament)
-                tournamentData.value = Error(errorMessage)
-            }
+    val tournament: LiveData<StateWrapper<Tournament>> = liveData(Dispatchers.IO) {
+        emit(Loading())
+        try {
+            val args = TournamentPageArgs.fromBundle(argumentsProvider())
+            val tournament = tournamentUsecase.get(args.tournamentId)
+            emit(Ok(tournament))
+        } catch (e: Exception) {
+            Timber.e(e)
+            val errorMessage = app.getString(R.string.error_get_tournament)
+            emit(Error(errorMessage))
         }
     }
 }

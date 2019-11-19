@@ -1,6 +1,7 @@
 package com.example.android.ratingbrowser
 
 import android.content.Context
+import android.os.Bundle
 import androidx.room.Room
 import com.example.android.ratingbrowser.data.Queries
 import com.example.android.ratingbrowser.data.Repository
@@ -21,17 +22,19 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
-import org.kodein.di.generic.singleton
+import org.kodein.di.generic.*
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 @UnstableDefault
 val mainModule = Kodein.Module("Main") {
     bind() from provider { TournamentListViewModel(instance()) }
-    bind() from provider { TournamentPageViewModel(instance()) }
+    bind() from factory { argumentsProvider: () -> Bundle ->
+        TournamentPageViewModel(
+            instance(),
+            argumentsProvider
+        )
+    }
 
     bind() from singleton { Repository(instance(), instance(), instance()) }
     bind() from singleton { createQueries() }

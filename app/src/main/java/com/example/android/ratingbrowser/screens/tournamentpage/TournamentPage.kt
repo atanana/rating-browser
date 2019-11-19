@@ -18,17 +18,10 @@ import com.example.android.ratingbrowser.utils.setStyle
 import org.kodein.di.generic.instance
 
 class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentPageBinding>() {
-    override val viewModel: TournamentPageViewModel by instance()
+    override val viewModel: TournamentPageViewModel by instance(arg = { arguments!! })
 
     override fun createBinding(container: ViewGroup): FragmentTournamentPageBinding =
         FragmentTournamentPageBinding.inflate(container.inflater(), container, true)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) {
-            viewModel.init(arguments!!)
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
