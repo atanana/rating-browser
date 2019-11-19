@@ -7,14 +7,13 @@ import com.example.android.ratingbrowser.data.db.TournamentShortEntity
 import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.withContext
 
 class TournamentsListResource(
     queries: Queries,
     database: AppDatabase,
     private val tournamentsPageParser: TournamentsPageParser,
-    scope: CoroutineScope = GlobalScope
+    scope: CoroutineScope
 ) : ListResource<TournamentShort>(queries, database, scope) {
     private val tournamentsShortDao = database.tournamentShortDao()
 

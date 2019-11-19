@@ -5,12 +5,11 @@ import com.example.android.ratingbrowser.data.TournamentApiData
 import com.example.android.ratingbrowser.data.db.AppDatabase
 import com.example.android.ratingbrowser.data.db.TournamentEntity
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
 
 class TournamentApiResource(
     queries: Queries,
     database: AppDatabase,
-    scope: CoroutineScope = GlobalScope
+    scope: CoroutineScope
 ) : Resource<TournamentApiData, Int>(queries, database, scope) {
     private val tournamentsDao = database.tournamentDao()
 

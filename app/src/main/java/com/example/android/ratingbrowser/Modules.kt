@@ -17,6 +17,8 @@ import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListU
 import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
@@ -25,6 +27,8 @@ import org.kodein.di.Kodein
 import org.kodein.di.generic.*
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
+
+private const val TAG_RESOURCE_SCOPE = "resource_scope"
 
 @UnstableDefault
 val mainModule = Kodein.Module("Main") {
@@ -45,9 +49,30 @@ val mainModule = Kodein.Module("Main") {
     bind() from singleton { TournamentsPageParser() }
     bind() from singleton { TournamentPageParser() }
 
-    bind() from singleton { TournamentApiResource(instance(), instance()) }
-    bind() from singleton { TournamentPageResource(instance(), instance(), instance()) }
-    bind() from singleton { TournamentsListResource(instance(), instance(), instance()) }
+    bind(tag = TAG_RESOURCE_SCOPE) from singleton { CoroutineScope(Dispatchers.IO) }
+    bind() from singleton {
+        TournamentApiResource(
+            instance(),
+            instance(),
+            instance(TAG_RESOURCE_SCOPE)
+        )
+    }
+    bind() from singleton {
+        TournamentPageResource(
+            instance(),
+            instance(),
+            instance(),
+            instance(TAG_RESOURCE_SCOPE)
+        )
+    }
+    bind() from singleton {
+        TournamentsListResource(
+            instance(),
+            instance(),
+            instance(),
+            instance(TAG_RESOURCE_SCOPE)
+        )
+    }
 
     bind() from singleton { createDatabase(instance()) }
 }

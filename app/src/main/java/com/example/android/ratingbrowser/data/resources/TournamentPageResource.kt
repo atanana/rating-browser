@@ -6,14 +6,13 @@ import com.example.android.ratingbrowser.data.db.*
 import com.example.android.ratingbrowser.data.parsers.TournamentPageParser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.withContext
 
 class TournamentPageResource(
     queries: Queries,
     database: AppDatabase,
     private val tournamentPageParser: TournamentPageParser,
-    scope: CoroutineScope = GlobalScope
+    scope: CoroutineScope
 ) : Resource<TournamentPageData, Int>(queries, database, scope) {
     private val relationsDao = database.personRelationsDao()
     private val personsDao = database.personsDao()
