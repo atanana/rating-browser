@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.StringRes
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.example.android.ratingbrowser.R
 import com.example.android.ratingbrowser.data.Person
 import com.example.android.ratingbrowser.data.Tournament
@@ -16,6 +16,9 @@ import com.example.android.ratingbrowser.screens.BaseFragment
 import com.example.android.ratingbrowser.screens.baseViewModels
 import com.example.android.ratingbrowser.utils.inflater
 import com.example.android.ratingbrowser.utils.setStyle
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentPageBinding>() {
     override val viewModel: TournamentPageViewModel by baseViewModels { app -> TournamentPageViewModel(app, arguments!!) }
@@ -23,11 +26,14 @@ class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentP
     override fun createBinding(container: ViewGroup): FragmentTournamentPageBinding =
         FragmentTournamentPageBinding.inflate(container.inflater(), container, true)
 
+    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.tournament.observe(viewLifecycleOwner, Observer {
-            processState(it, this::processData)
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.tournament.collect {
+                processState(it, this@TournamentPage::processData)
+            }
+        }
     }
 
     private fun processData(tournament: Tournament) {
