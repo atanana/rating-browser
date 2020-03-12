@@ -7,18 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.android.ratingbrowser.R
 import com.example.android.ratingbrowser.data.Person
 import com.example.android.ratingbrowser.data.Tournament
 import com.example.android.ratingbrowser.databinding.FragmentTournamentPageBinding
 import com.example.android.ratingbrowser.screens.BaseFragment
+import com.example.android.ratingbrowser.screens.BaseViewModelFactory
 import com.example.android.ratingbrowser.utils.inflater
 import com.example.android.ratingbrowser.utils.setStyle
-import org.kodein.di.generic.instance
 
 class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentPageBinding>() {
-    override val viewModel: TournamentPageViewModel by instance(arg = { arguments!! })
+    override val viewModel: TournamentPageViewModel by viewModels {
+        BaseViewModelFactory(this) { application ->
+            TournamentPageViewModel(application, arguments!!)
+        }
+    }
 
     override fun createBinding(container: ViewGroup): FragmentTournamentPageBinding =
         FragmentTournamentPageBinding.inflate(container.inflater(), container, true)

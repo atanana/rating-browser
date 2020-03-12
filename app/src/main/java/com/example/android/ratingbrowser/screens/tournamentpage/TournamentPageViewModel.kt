@@ -15,14 +15,14 @@ import timber.log.Timber
 
 class TournamentPageViewModel(
     app: Application,
-    private val argumentsProvider: () -> Bundle
+    private val arguments: Bundle
 ) : BaseViewModel(app) {
     private val tournamentUsecase: TournamentUsecase by instance()
 
     val tournament: LiveData<StateWrapper<Tournament>> = liveData(Dispatchers.IO) {
         emit(Loading())
         try {
-            val args = TournamentPageArgs.fromBundle(argumentsProvider())
+            val args = TournamentPageArgs.fromBundle(arguments)
             val tournament = tournamentUsecase.get(args.tournamentId)
             emit(Ok(tournament))
         } catch (e: Exception) {

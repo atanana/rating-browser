@@ -1,7 +1,6 @@
 package com.example.android.ratingbrowser
 
 import android.content.Context
-import android.os.Bundle
 import androidx.room.Room
 import com.example.android.ratingbrowser.data.Queries
 import com.example.android.ratingbrowser.data.Repository
@@ -11,10 +10,8 @@ import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
 import com.example.android.ratingbrowser.data.resources.TournamentApiResource
 import com.example.android.ratingbrowser.data.resources.TournamentPageResource
 import com.example.android.ratingbrowser.data.resources.TournamentsListResource
-import com.example.android.ratingbrowser.screens.tournamentpage.TournamentPageViewModel
 import com.example.android.ratingbrowser.screens.tournamentpage.TournamentUsecase
 import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListUsecase
-import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.CoroutineScope
@@ -24,7 +21,9 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import org.kodein.di.Kodein
-import org.kodein.di.generic.*
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.singleton
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
@@ -32,14 +31,6 @@ private const val TAG_RESOURCE_SCOPE = "resource_scope"
 
 @UnstableDefault
 val mainModule = Kodein.Module("Main") {
-    bind() from provider { TournamentListViewModel(instance()) }
-    bind() from factory { argumentsProvider: () -> Bundle ->
-        TournamentPageViewModel(
-            instance(),
-            argumentsProvider
-        )
-    }
-
     bind() from singleton { Repository(instance(), instance(), instance()) }
     bind() from singleton { createQueries() }
 
