@@ -2,19 +2,19 @@ package com.example.android.ratingbrowser.screens
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.navigation.NavDirections
-import com.example.android.ratingbrowser.livedata.SingleLiveEvent
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ReceiveChannel
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 
 abstract class BaseViewModel(protected val app: Application) : AndroidViewModel(app), KodeinAware {
     override val kodein by kodein()
 
-    private val navigationData = SingleLiveEvent<NavDirections>()
-    val navigation: LiveData<NavDirections> = navigationData
+    private val navigationData = Channel<NavDirections>()
+    val navigation: ReceiveChannel<NavDirections> = navigationData
 
-    fun navigate(directions: NavDirections) {
-        navigationData.value = directions
+    suspend fun navigate(directions: NavDirections) {
+        navigationData.send(directions)
     }
 }

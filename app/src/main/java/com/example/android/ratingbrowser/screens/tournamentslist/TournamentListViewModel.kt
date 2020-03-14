@@ -1,6 +1,7 @@
 package com.example.android.ratingbrowser.screens.tournamentslist
 
 import android.app.Application
+import androidx.lifecycle.viewModelScope
 import com.example.android.ratingbrowser.R
 import com.example.android.ratingbrowser.data.StateWrapper
 import com.example.android.ratingbrowser.data.StateWrapper.*
@@ -10,6 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import org.kodein.di.generic.instance
 import timber.log.Timber
 
@@ -29,7 +31,9 @@ class TournamentListViewModel(app: Application) : BaseViewModel(app) {
     }.flowOn(Dispatchers.IO)
 
     fun onTournamentClicked(tournamentId: Int) {
-        val directions = TournamentListDirections.actionTournamentListToTournamentPage(tournamentId)
-        navigate(directions)
+        viewModelScope.launch {
+            val directions = TournamentListDirections.actionTournamentListToTournamentPage(tournamentId)
+            navigate(directions)
+        }
     }
 }
