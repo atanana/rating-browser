@@ -5,6 +5,7 @@ import com.example.android.ratingbrowser.data.db.AppDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 abstract class Resource<Data, Payload>(
     protected val queries: Queries,
@@ -27,7 +28,11 @@ abstract class Resource<Data, Payload>(
         val result = getFromDb(payload)
         return if (result != null) {
             scope.launch {
-                update(payload)
+                try {
+                    update(payload)
+                } catch (e: Exception) {
+                    Timber.e(e)
+                }
             }
             result
         } else {
