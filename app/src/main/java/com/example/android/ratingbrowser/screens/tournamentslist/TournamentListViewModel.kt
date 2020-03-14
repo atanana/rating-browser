@@ -27,4 +27,9 @@ class TournamentListViewModel(app: Application) : BaseViewModel(app) {
             emit(Error(errorMessage))
         }
     }.flowOn(Dispatchers.IO)
+
+    fun onTournamentClicked(tournamentId: Int) {
+        val directions = TournamentListDirections.actionTournamentListToTournamentPage(tournamentId)
+        navigate(directions)
+    }
 }

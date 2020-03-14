@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 class TournamentList : BaseFragment<TournamentListViewModel, FragmentTournamentListBinding>() {
     override val viewModel: TournamentListViewModel by viewModels()
 
-    private val tournamentsAdapter = TournamentsAdapter(this::onTournamentClicked)
+    private val tournamentsAdapter by lazy { TournamentsAdapter(viewModel::onTournamentClicked) }
 
     override fun createBinding(container: ViewGroup): FragmentTournamentListBinding =
         FragmentTournamentListBinding.inflate(container.inflater(), container, true)
@@ -44,10 +44,5 @@ class TournamentList : BaseFragment<TournamentListViewModel, FragmentTournamentL
     private fun processData(tournamentList: TournamentsList) {
         tournamentsAdapter.items = tournamentList.tournaments
         tournaments.scrollToPosition(tournamentList.scrollPosition)
-    }
-
-    private fun onTournamentClicked(tournamentId: Int) {
-        val directions = TournamentListDirections.actionTournamentListToTournamentPage(tournamentId)
-        viewModel.navigate(directions)
     }
 }
