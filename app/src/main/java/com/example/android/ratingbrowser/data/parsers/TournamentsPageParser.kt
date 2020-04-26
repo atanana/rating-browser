@@ -6,7 +6,6 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import timber.log.Timber
 
 class TournamentsPageParser {
     private val formatter = DateTimeFormatter.ofPattern("dd.MM.yy")

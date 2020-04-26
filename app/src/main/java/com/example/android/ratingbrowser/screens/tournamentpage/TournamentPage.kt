@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentPageBinding>() {
-    override val viewModel: TournamentPageViewModel by baseViewModels { app -> TournamentPageViewModel(app, arguments!!) }
+    override val viewModel: TournamentPageViewModel by baseViewModels { app -> TournamentPageViewModel(app, requireArguments()) }
 
     override fun createBinding(container: ViewGroup): FragmentTournamentPageBinding =
         FragmentTournamentPageBinding.inflate(container.inflater(), container, true)

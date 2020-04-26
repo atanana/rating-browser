@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.annotation.StyleRes
-import com.example.android.ratingbrowser.R
 
 fun Context.inflate(
     @LayoutRes layout: Int,

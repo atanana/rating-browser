@@ -1,7 +1,6 @@
 package com.example.android.ratingbrowser
 
 import android.app.Application
-import android.os.Build
 import com.jakewharton.threetenabp.AndroidThreeTen
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
