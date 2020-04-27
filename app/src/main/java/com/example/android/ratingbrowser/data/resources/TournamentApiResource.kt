@@ -5,6 +5,8 @@ import com.example.android.ratingbrowser.data.TournamentApiData
 import com.example.android.ratingbrowser.data.db.AppDatabase
 import com.example.android.ratingbrowser.data.db.TournamentEntity
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class TournamentApiResource(
     queries: Queries,
@@ -13,16 +15,17 @@ class TournamentApiResource(
 ) : Resource<TournamentApiData, Int>(queries, database, scope) {
     private val tournamentsDao = database.tournamentDao()
 
-    override suspend fun getFromDb(payload: Int): TournamentApiData? {
-        val entity = tournamentsDao.getTournament(payload) ?: return null
-        return TournamentApiData(
-            id = entity.id,
-            name = entity.name,
-            startDate = entity.startDate,
-            endDate = entity.endDate,
-            questions = entity.questions
-        )
-    }
+    override fun getFromDb(payload: Int): Flow<TournamentApiData?> =
+        tournamentsDao.getTournament(payload).map { entity ->
+            entity ?: return@map null
+            TournamentApiData(
+                id = entity.id,
+                name = entity.name,
+                startDate = entity.startDate,
+                endDate = entity.endDate,
+                questions = entity.questions
+            )
+        }
 
     override suspend fun saveToDb(data: TournamentApiData) {
         val entity = TournamentEntity(

@@ -6,6 +6,9 @@ import com.example.android.ratingbrowser.data.db.*
 import com.example.android.ratingbrowser.data.parsers.TournamentPageParser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.withContext
 
 class TournamentPageResource(
@@ -17,19 +20,22 @@ class TournamentPageResource(
     private val relationsDao = database.personRelationsDao()
     private val personsDao = database.personsDao()
 
-    override suspend fun getFromDb(payload: Int): TournamentPageData? {
-        val editors = relationsDao.getRelations(payload, PersonRelationType.EDITOR)
-        val gameJury = relationsDao.getRelations(payload, PersonRelationType.GAME_JURY)
-        val appealsJury = relationsDao.getRelations(payload, PersonRelationType.APPEALS_JURY)
-        return if (editors.isEmpty() && gameJury.isEmpty() && appealsJury.isEmpty()) {
-            null
-        } else {
-            TournamentPageData(
-                id = payload,
-                editors = editors.toStrings(),
-                gameJury = gameJury.toStrings(),
-                appealJury = appealsJury.toStrings()
-            )
+    @ExperimentalCoroutinesApi
+    override fun getFromDb(payload: Int): Flow<TournamentPageData?> {
+        val editorsFlow = relationsDao.getRelations(payload, PersonRelationType.EDITOR)
+        val gameJuryFlow = relationsDao.getRelations(payload, PersonRelationType.GAME_JURY)
+        val appealsJuryFlow = relationsDao.getRelations(payload, PersonRelationType.APPEALS_JURY)
+        return combine(editorsFlow, gameJuryFlow, appealsJuryFlow) { editors, gameJury, appealsJury ->
+            if (editors.isEmpty() && gameJury.isEmpty() && appealsJury.isEmpty()) {
+                null
+            } else {
+                TournamentPageData(
+                    id = payload,
+                    editors = editors.toStrings(),
+                    gameJury = gameJury.toStrings(),
+                    appealJury = appealsJury.toStrings()
+                )
+            }
         }
     }
 

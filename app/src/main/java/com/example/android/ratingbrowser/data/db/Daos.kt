@@ -4,11 +4,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TournamentsShortDao {
     @Query("select * from tournaments_short order by endDate desc")
-    suspend fun tournaments(): List<TournamentShortEntity>
+    fun tournaments(): Flow<List<TournamentShortEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(tournaments: List<TournamentShortEntity>)
@@ -20,7 +21,7 @@ interface TournamentsShortDao {
 @Dao
 interface TournamentsDao {
     @Query("select * from tournaments where id = :id")
-    suspend fun getTournament(id: Int): TournamentEntity?
+    fun getTournament(id: Int): Flow<TournamentEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(tournament: TournamentEntity)
@@ -57,7 +58,7 @@ interface PersonRelationsDao {
         where person_relations.type = :type and person_relations.tournamentId = :tournamentId
     """
     )
-    suspend fun getRelations(tournamentId: Int, type: PersonRelationType): List<PersonEntity>
+    fun getRelations(tournamentId: Int, type: PersonRelationType): Flow<List<PersonEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(personRelation: PersonRelationEntity)

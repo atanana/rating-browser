@@ -6,16 +6,18 @@ import com.example.android.ratingbrowser.R
 import com.example.android.ratingbrowser.data.Repository
 import com.example.android.ratingbrowser.data.TournamentShort
 import com.example.android.ratingbrowser.data.TournamentType
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 
 class TournamentListUsecase(private val repository: Repository, private val context: Context) {
-    suspend fun get(): TournamentsList {
-        val tournaments = repository.getTournaments()
-        val scrollPosition = calculateScrollPosition(tournaments)
-        val items = getItems(tournaments)
-        return TournamentsList(items, scrollPosition)
-    }
+    fun get(): Flow<TournamentsList> =
+        repository.getTournaments().map { tournaments ->
+            val scrollPosition = calculateScrollPosition(tournaments)
+            val items = getItems(tournaments)
+            TournamentsList(items, scrollPosition)
+        }
 
     private fun calculateScrollPosition(tournaments: List<TournamentShort>): Int {
         val now = LocalDate.now()

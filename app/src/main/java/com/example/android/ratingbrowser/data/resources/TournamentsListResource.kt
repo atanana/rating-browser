@@ -7,6 +7,8 @@ import com.example.android.ratingbrowser.data.db.TournamentShortEntity
 import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 class TournamentsListResource(
@@ -17,8 +19,10 @@ class TournamentsListResource(
 ) : ListResource<TournamentShort>(queries, database, scope) {
     private val tournamentsShortDao = database.tournamentShortDao()
 
-    override suspend fun getFromDb(): List<TournamentShort> =
-        tournamentsShortDao.tournaments().map { it.toData() }
+    override fun getFromDb(): Flow<List<TournamentShort>> =
+        tournamentsShortDao.tournaments().map { list ->
+            list.map { it.toData() }
+        }
 
     override suspend fun getFromNetwork(): List<TournamentShort> {
         val response = queries.getTournaments()

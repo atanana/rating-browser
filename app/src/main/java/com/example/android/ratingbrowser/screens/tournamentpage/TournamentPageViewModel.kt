@@ -9,9 +9,8 @@ import com.example.android.ratingbrowser.data.Tournament
 import com.example.android.ratingbrowser.screens.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 import org.kodein.di.generic.instance
 import timber.log.Timber
 
@@ -21,17 +20,20 @@ class TournamentPageViewModel(
 ) : BaseViewModel(app) {
     private val tournamentUsecase: TournamentUsecase by instance()
 
+    @FlowPreview
     @ExperimentalCoroutinesApi
-    val tournament: Flow<StateWrapper<Tournament>> = flow<StateWrapper<Tournament>> {
-        emit(Loading())
-        try {
+    val tournament: Flow<StateWrapper<Tournament>> =
+        flow {
             val args = TournamentPageArgs.fromBundle(arguments)
-            val tournament = tournamentUsecase.get(args.tournamentId)
-            emit(Ok(tournament))
-        } catch (e: Exception) {
-            Timber.e(e)
-            val errorMessage = app.getString(R.string.error_get_tournament)
-            emit(Error(errorMessage))
+            emit(args)
         }
-    }.flowOn(Dispatchers.IO)
+            .flatMapConcat { tournamentUsecase.get(it.tournamentId) }
+            .map<Tournament, StateWrapper<Tournament>> { Ok(it) }
+            .onStart { emit(Loading()) }
+            .catch { error ->
+                Timber.e(error)
+                val errorMessage = app.getString(R.string.error_get_tournament)
+                emit(Error(errorMessage))
+            }
+            .flowOn(Dispatchers.IO)
 }
