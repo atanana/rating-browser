@@ -1,5 +1,6 @@
 package com.example.android.ratingbrowser.data.resources
 
+import androidx.room.withTransaction
 import com.example.android.ratingbrowser.data.Queries
 import com.example.android.ratingbrowser.data.TournamentPageData
 import com.example.android.ratingbrowser.data.db.*
@@ -42,10 +43,12 @@ class TournamentPageResource(
     private fun Collection<PersonEntity>.toStrings() = map { it.name }
 
     override suspend fun saveToDb(data: TournamentPageData) {
-        relationsDao.clearRelations(data.id)
-        saveRelations(data.id, PersonRelationType.EDITOR, data.editors)
-        saveRelations(data.id, PersonRelationType.GAME_JURY, data.gameJury)
-        saveRelations(data.id, PersonRelationType.APPEALS_JURY, data.appealJury)
+        database.withTransaction {
+            relationsDao.clearRelations(data.id)
+            saveRelations(data.id, PersonRelationType.EDITOR, data.editors)
+            saveRelations(data.id, PersonRelationType.GAME_JURY, data.gameJury)
+            saveRelations(data.id, PersonRelationType.APPEALS_JURY, data.appealJury)
+        }
     }
 
     private suspend fun saveRelations(
