@@ -43,7 +43,7 @@ data class PersonEntity(
             onDelete = ForeignKey.CASCADE
         )
     ],
-    primaryKeys = ["tournamentId", "personId"]
+    primaryKeys = ["tournamentId", "personId", "type"]
 )
 data class PersonRelationEntity(
     val type: PersonRelationType,
