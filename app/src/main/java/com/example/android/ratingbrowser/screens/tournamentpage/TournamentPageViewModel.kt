@@ -28,6 +28,7 @@ class TournamentPageViewModel(
             emit(args)
         }
             .flatMapConcat { tournamentUsecase.get(it.tournamentId) }
+            .distinctUntilChanged()
             .map<Tournament, StateWrapper<Tournament>> { Ok(it) }
             .onStart { emit(Loading()) }
             .catch { error ->

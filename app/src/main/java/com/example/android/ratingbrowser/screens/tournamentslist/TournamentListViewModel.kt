@@ -20,6 +20,7 @@ class TournamentListViewModel(app: Application) : BaseViewModel(app) {
     val tournaments: Flow<StateWrapper<TournamentsList>> =
         tournamentListUsecase.get()
             .map<TournamentsList, StateWrapper<TournamentsList>> { Ok(it) }
+            .distinctUntilChanged()
             .onStart { emit(Loading()) }
             .catch { error ->
                 Timber.e(error)
