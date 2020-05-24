@@ -16,6 +16,7 @@ import com.example.android.ratingbrowser.screens.BaseFragment
 import com.example.android.ratingbrowser.utils.inflater
 import com.example.android.ratingbrowser.utils.setStyle
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -27,6 +28,7 @@ class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentP
     override fun createBinding(container: ViewGroup): FragmentTournamentPageBinding =
         FragmentTournamentPageBinding.inflate(container.inflater(), container, true)
 
+    @FlowPreview
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
