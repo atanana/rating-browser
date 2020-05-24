@@ -1,4 +1,4 @@
-package com.example.android.ratingbrowser.data
+package com.atanana.common
 
 sealed class StateWrapper<T> {
     class Loading<T> : StateWrapper<T>()

@@ -1,8 +1,8 @@
 package com.example.android.ratingbrowser.screens.tournamentpage
 
-import com.example.android.ratingbrowser.data.Person
-import com.example.android.ratingbrowser.data.Repository
-import com.example.android.ratingbrowser.data.Tournament
+import com.atanana.common.Person
+import com.atanana.common.Tournament
+import com.atanana.datasource.Repository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

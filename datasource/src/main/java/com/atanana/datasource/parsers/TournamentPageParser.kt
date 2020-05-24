@@ -1,6 +1,6 @@
-package com.example.android.ratingbrowser.data.parsers
+package com.atanana.datasource.parsers
 
-import com.example.android.ratingbrowser.data.TournamentPageResponse
+import com.atanana.datasource.TournamentPageResponse
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 

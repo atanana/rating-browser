@@ -2,10 +2,10 @@ package com.example.android.ratingbrowser.screens.tournamentslist
 
 import android.content.Context
 import androidx.core.content.ContextCompat
+import com.atanana.common.TournamentShort
+import com.atanana.common.TournamentType
+import com.atanana.datasource.Repository
 import com.example.android.ratingbrowser.R
-import com.example.android.ratingbrowser.data.Repository
-import com.example.android.ratingbrowser.data.TournamentShort
-import com.example.android.ratingbrowser.data.TournamentType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.threeten.bp.LocalDate

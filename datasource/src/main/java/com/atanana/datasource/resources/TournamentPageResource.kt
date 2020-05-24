@@ -1,10 +1,10 @@
-package com.example.android.ratingbrowser.data.resources
+package com.atanana.datasource.resources
 
 import androidx.room.withTransaction
-import com.example.android.ratingbrowser.data.Queries
-import com.example.android.ratingbrowser.data.TournamentPageData
-import com.example.android.ratingbrowser.data.db.*
-import com.example.android.ratingbrowser.data.parsers.TournamentPageParser
+import com.atanana.common.TournamentPageData
+import com.atanana.datasource.Queries
+import com.atanana.datasource.database.*
+import com.atanana.datasource.parsers.TournamentPageParser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

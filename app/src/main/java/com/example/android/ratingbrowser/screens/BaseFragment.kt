@@ -8,9 +8,9 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.atanana.common.StateWrapper
+import com.atanana.common.StateWrapper.*
 import com.example.android.ratingbrowser.R
-import com.example.android.ratingbrowser.data.StateWrapper
-import com.example.android.ratingbrowser.data.StateWrapper.*
 import com.example.android.ratingbrowser.utils.setVisibility
 import kotlinx.android.synthetic.main.fragment_base.*
 import kotlinx.coroutines.launch

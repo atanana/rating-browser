@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.lifecycle.lifecycleScope
+import com.atanana.common.Person
+import com.atanana.common.Tournament
 import com.example.android.ratingbrowser.R
-import com.example.android.ratingbrowser.data.Person
-import com.example.android.ratingbrowser.data.Tournament
 import com.example.android.ratingbrowser.databinding.FragmentTournamentPageBinding
 import com.example.android.ratingbrowser.screens.BaseFragment
 import com.example.android.ratingbrowser.utils.inflater

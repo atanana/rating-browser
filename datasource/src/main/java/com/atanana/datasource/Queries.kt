@@ -1,4 +1,4 @@
-package com.example.android.ratingbrowser.data
+package com.atanana.datasource
 
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -1,7 +1,7 @@
-package com.example.android.ratingbrowser.data.resources
+package com.atanana.datasource.resources
 
-import com.example.android.ratingbrowser.data.Queries
-import com.example.android.ratingbrowser.data.db.AppDatabase
+import com.atanana.datasource.Queries
+import com.atanana.datasource.database.AppDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow

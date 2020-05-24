@@ -1,10 +1,10 @@
-package com.example.android.ratingbrowser.data.db
+package com.atanana.datasource.database
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.example.android.ratingbrowser.data.TournamentType
+import com.atanana.common.TournamentType
 import org.threeten.bp.LocalDate
 
 @Entity(tableName = "tournaments_short")

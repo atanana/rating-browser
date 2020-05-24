@@ -1,7 +1,7 @@
-package com.example.android.ratingbrowser.data.parsers
+package com.atanana.datasource.parsers
 
-import com.example.android.ratingbrowser.data.TournamentShort
-import com.example.android.ratingbrowser.data.TournamentType
+import com.atanana.common.TournamentShort
+import com.atanana.common.TournamentType
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.threeten.bp.LocalDate

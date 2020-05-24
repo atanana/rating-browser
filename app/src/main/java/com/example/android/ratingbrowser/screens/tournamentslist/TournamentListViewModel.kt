@@ -2,9 +2,9 @@ package com.example.android.ratingbrowser.screens.tournamentslist
 
 import android.app.Application
 import androidx.lifecycle.viewModelScope
+import com.atanana.common.StateWrapper
+import com.atanana.common.StateWrapper.*
 import com.example.android.ratingbrowser.R
-import com.example.android.ratingbrowser.data.StateWrapper
-import com.example.android.ratingbrowser.data.StateWrapper.*
 import com.example.android.ratingbrowser.screens.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

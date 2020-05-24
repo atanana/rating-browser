@@ -1,4 +1,4 @@
-package com.example.android.ratingbrowser.data.db
+package com.atanana.datasource.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

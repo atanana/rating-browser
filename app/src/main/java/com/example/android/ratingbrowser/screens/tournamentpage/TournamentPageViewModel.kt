@@ -2,10 +2,10 @@ package com.example.android.ratingbrowser.screens.tournamentpage
 
 import android.app.Application
 import android.os.Bundle
+import com.atanana.common.StateWrapper
+import com.atanana.common.StateWrapper.*
+import com.atanana.common.Tournament
 import com.example.android.ratingbrowser.R
-import com.example.android.ratingbrowser.data.StateWrapper
-import com.example.android.ratingbrowser.data.StateWrapper.*
-import com.example.android.ratingbrowser.data.Tournament
 import com.example.android.ratingbrowser.screens.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,9 +1,9 @@
-package com.example.android.ratingbrowser.data.resources
+package com.atanana.datasource.resources
 
-import com.example.android.ratingbrowser.data.Queries
-import com.example.android.ratingbrowser.data.TournamentApiData
-import com.example.android.ratingbrowser.data.db.AppDatabase
-import com.example.android.ratingbrowser.data.db.TournamentEntity
+import com.atanana.common.TournamentApiData
+import com.atanana.datasource.Queries
+import com.atanana.datasource.database.AppDatabase
+import com.atanana.datasource.database.TournamentEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

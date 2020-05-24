@@ -1,8 +1,11 @@
-package com.example.android.ratingbrowser.data
+package com.atanana.datasource
 
-import com.example.android.ratingbrowser.data.resources.TournamentApiResource
-import com.example.android.ratingbrowser.data.resources.TournamentPageResource
-import com.example.android.ratingbrowser.data.resources.TournamentsListResource
+import com.atanana.common.TournamentApiData
+import com.atanana.common.TournamentPageData
+import com.atanana.common.TournamentShort
+import com.atanana.datasource.resources.TournamentApiResource
+import com.atanana.datasource.resources.TournamentPageResource
+import com.atanana.datasource.resources.TournamentsListResource
 import kotlinx.coroutines.flow.Flow
 
 class Repository(

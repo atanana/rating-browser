@@ -1,10 +1,10 @@
-package com.example.android.ratingbrowser.data.resources
+package com.atanana.datasource.resources
 
-import com.example.android.ratingbrowser.data.Queries
-import com.example.android.ratingbrowser.data.TournamentShort
-import com.example.android.ratingbrowser.data.db.AppDatabase
-import com.example.android.ratingbrowser.data.db.TournamentShortEntity
-import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
+import com.atanana.common.TournamentShort
+import com.atanana.datasource.Queries
+import com.atanana.datasource.database.AppDatabase
+import com.atanana.datasource.database.TournamentShortEntity
+import com.atanana.datasource.parsers.TournamentsPageParser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -37,19 +37,21 @@ class TournamentsListResource(
         tournamentsShortDao.add(entities)
     }
 
-    private fun TournamentShort.toEntity(): TournamentShortEntity = TournamentShortEntity(
-        id = id,
-        name = name,
-        type = type,
-        endDate = endDate,
-        difficulty = difficulty
-    )
+    private fun TournamentShort.toEntity(): TournamentShortEntity =
+        TournamentShortEntity(
+            id = id,
+            name = name,
+            type = type,
+            endDate = endDate,
+            difficulty = difficulty
+        )
 
-    private fun TournamentShortEntity.toData(): TournamentShort = TournamentShort(
-        id = id,
-        name = name,
-        type = type,
-        endDate = endDate,
-        difficulty = difficulty
-    )
+    private fun TournamentShortEntity.toData(): TournamentShort =
+        TournamentShort(
+            id = id,
+            name = name,
+            type = type,
+            endDate = endDate,
+            difficulty = difficulty
+        )
 }

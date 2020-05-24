@@ -1,7 +1,7 @@
-package com.example.android.ratingbrowser.data.db
+package com.atanana.datasource.database
 
 import androidx.room.TypeConverter
-import com.example.android.ratingbrowser.data.TournamentType
+import com.atanana.common.TournamentType
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
