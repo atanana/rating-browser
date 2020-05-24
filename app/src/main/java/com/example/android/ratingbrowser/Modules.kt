@@ -1,6 +1,7 @@
 package com.example.android.ratingbrowser
 
 import android.content.Context
+import android.os.Bundle
 import androidx.room.Room
 import com.example.android.ratingbrowser.data.Queries
 import com.example.android.ratingbrowser.data.Repository
@@ -10,8 +11,10 @@ import com.example.android.ratingbrowser.data.parsers.TournamentsPageParser
 import com.example.android.ratingbrowser.data.resources.TournamentApiResource
 import com.example.android.ratingbrowser.data.resources.TournamentPageResource
 import com.example.android.ratingbrowser.data.resources.TournamentsListResource
+import com.example.android.ratingbrowser.screens.tournamentpage.TournamentPageViewModel
 import com.example.android.ratingbrowser.screens.tournamentpage.TournamentUsecase
 import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListUsecase
+import com.example.android.ratingbrowser.screens.tournamentslist.TournamentListViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.CoroutineScope
@@ -20,52 +23,54 @@ import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 private const val TAG_RESOURCE_SCOPE = "resource_scope"
 
 @UnstableDefault
-val mainModule = Kodein.Module("Main") {
-    bind() from singleton { Repository(instance(), instance(), instance()) }
-    bind() from singleton { createQueries() }
+val mainModule = module {
+    single { Repository(get(), get(), get()) }
+    single { createQueries() }
 
-    bind() from singleton { TournamentListUsecase(instance(), instance()) }
-    bind() from singleton { TournamentUsecase(instance()) }
+    single { TournamentListUsecase(get(), get()) }
+    single { TournamentUsecase(get()) }
 
-    bind() from singleton { TournamentsPageParser() }
-    bind() from singleton { TournamentPageParser() }
+    viewModel { (args: Bundle) -> TournamentPageViewModel(get(), args, get()) }
+    viewModel { TournamentListViewModel(get(), get()) }
 
-    bind(tag = TAG_RESOURCE_SCOPE) from singleton { CoroutineScope(Dispatchers.IO) }
-    bind() from singleton {
+    single { TournamentsPageParser() }
+    single { TournamentPageParser() }
+
+    single(named(TAG_RESOURCE_SCOPE)) { CoroutineScope(Dispatchers.IO) }
+    single {
         TournamentApiResource(
-            instance(),
-            instance(),
-            instance(TAG_RESOURCE_SCOPE)
+            get(),
+            get(),
+            get(named(TAG_RESOURCE_SCOPE))
         )
     }
-    bind() from singleton {
+    single {
         TournamentPageResource(
-            instance(),
-            instance(),
-            instance(),
-            instance(TAG_RESOURCE_SCOPE)
+            get(),
+            get(),
+            get(),
+            get(named(TAG_RESOURCE_SCOPE))
         )
     }
-    bind() from singleton {
+    single {
         TournamentsListResource(
-            instance(),
-            instance(),
-            instance(),
-            instance(TAG_RESOURCE_SCOPE)
+            get(),
+            get(),
+            get(),
+            get(named(TAG_RESOURCE_SCOPE))
         )
     }
 
-    bind() from singleton { createDatabase(instance()) }
+    single { createDatabase(get()) }
 }
 
 @UnstableDefault

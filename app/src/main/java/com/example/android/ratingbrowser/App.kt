@@ -2,17 +2,15 @@ package com.example.android.ratingbrowser
 
 import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.androidXModule
+import kotlinx.serialization.UnstableDefault
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import timber.log.Timber
 
-class App : Application(), KodeinAware {
-    override val kodein by Kodein.lazy {
-        import(androidXModule(this@App))
-        import(mainModule)
-    }
+class App : Application() {
 
+    @UnstableDefault
     override fun onCreate() {
         super.onCreate()
 
@@ -20,6 +18,12 @@ class App : Application(), KodeinAware {
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+        }
+
+        startKoin {
+            androidLogger()
+            androidContext(this@App)
+            modules(mainModule)
         }
     }
 }

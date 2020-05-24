@@ -11,14 +11,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
-import org.kodein.di.generic.instance
 import timber.log.Timber
 
 class TournamentPageViewModel(
     app: Application,
-    private val arguments: Bundle
+    private val arguments: Bundle,
+    private val tournamentUsecase: TournamentUsecase
 ) : BaseViewModel(app) {
-    private val tournamentUsecase: TournamentUsecase by instance()
 
     @FlowPreview
     @ExperimentalCoroutinesApi

@@ -4,7 +4,6 @@ package com.example.android.ratingbrowser.screens.tournamentslist
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.brandongogetap.stickyheaders.StickyLayoutManager
 import com.brandongogetap.stickyheaders.exposed.StickyHeaderHandler
@@ -15,11 +14,12 @@ import kotlinx.android.synthetic.main.fragment_tournament_list.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class TournamentList : BaseFragment<TournamentListViewModel, FragmentTournamentListBinding>() {
-    override val viewModel: TournamentListViewModel by viewModels()
+    override val model: TournamentListViewModel by viewModel()
 
-    private val tournamentsAdapter by lazy { TournamentsAdapter(viewModel::onTournamentClicked) }
+    private val tournamentsAdapter by lazy { TournamentsAdapter(model::onTournamentClicked) }
 
     override fun createBinding(container: ViewGroup): FragmentTournamentListBinding =
         FragmentTournamentListBinding.inflate(container.inflater(), container, true)
@@ -35,7 +35,7 @@ class TournamentList : BaseFragment<TournamentListViewModel, FragmentTournamentL
         tournaments.layoutManager = stickyLayoutManager
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.tournaments.collect {
+            model.tournaments.collect {
                 processState(it, this@TournamentList::processData)
             }
         }

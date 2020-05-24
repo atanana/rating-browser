@@ -13,15 +13,16 @@ import com.example.android.ratingbrowser.data.Person
 import com.example.android.ratingbrowser.data.Tournament
 import com.example.android.ratingbrowser.databinding.FragmentTournamentPageBinding
 import com.example.android.ratingbrowser.screens.BaseFragment
-import com.example.android.ratingbrowser.screens.baseViewModels
 import com.example.android.ratingbrowser.utils.inflater
 import com.example.android.ratingbrowser.utils.setStyle
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentPageBinding>() {
-    override val viewModel: TournamentPageViewModel by baseViewModels { app -> TournamentPageViewModel(app, requireArguments()) }
+    override val model: TournamentPageViewModel by viewModel { parametersOf(requireArguments()) }
 
     override fun createBinding(container: ViewGroup): FragmentTournamentPageBinding =
         FragmentTournamentPageBinding.inflate(container.inflater(), container, true)
@@ -30,7 +31,7 @@ class TournamentPage : BaseFragment<TournamentPageViewModel, FragmentTournamentP
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.tournament.collect {
+            model.tournament.collect {
                 processState(it, this@TournamentPage::processData)
             }
         }

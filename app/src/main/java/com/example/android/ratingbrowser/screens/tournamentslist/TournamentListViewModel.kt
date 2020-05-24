@@ -10,12 +10,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.kodein.di.generic.instance
 import timber.log.Timber
 
-class TournamentListViewModel(app: Application) : BaseViewModel(app) {
-    private val tournamentListUsecase: TournamentListUsecase by instance()
-
+class TournamentListViewModel(app: Application, tournamentListUsecase: TournamentListUsecase) : BaseViewModel(app) {
     @ExperimentalCoroutinesApi
     val tournaments: Flow<StateWrapper<TournamentsList>> =
         tournamentListUsecase.get()

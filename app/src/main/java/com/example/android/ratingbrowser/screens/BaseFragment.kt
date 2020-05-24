@@ -14,14 +14,10 @@ import com.example.android.ratingbrowser.data.StateWrapper.*
 import com.example.android.ratingbrowser.utils.setVisibility
 import kotlinx.android.synthetic.main.fragment_base.*
 import kotlinx.coroutines.launch
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.kodein
 
-abstract class BaseFragment<VM : BaseViewModel, B : ViewDataBinding> :
-    Fragment(R.layout.fragment_base), KodeinAware {
-    override val kodein by kodein()
+abstract class BaseFragment<VM : BaseViewModel, B : ViewDataBinding> : Fragment(R.layout.fragment_base) {
 
-    protected abstract val viewModel: VM
+    protected abstract val model: VM
 
     protected lateinit var binding: B
 
@@ -40,7 +36,7 @@ abstract class BaseFragment<VM : BaseViewModel, B : ViewDataBinding> :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
-            for (navDirections in viewModel.navigation) {
+            for (navDirections in model.navigation) {
                 findNavController().navigate(navDirections)
             }
         }
